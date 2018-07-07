@@ -12,7 +12,7 @@ class Match
 {
     //    var rawData:String? = nil
     
-    private var sentences = [String]()
+    private(set) var sentences = [String]()
     
     //could be computed property, but efficiency calls for it to be computed in init()
     private var sentencesWordCount = [Int:Int]()
@@ -31,8 +31,8 @@ class Match
         }
     }
     
-    func stringForViewController(index:Int) -> (current: String, ahead: String) {
-        return (sentences[index], sentences[index + ahead]) // +ahead for looking ahead of presenter
+    func stringForViewController(index:Int) -> (current: String, ahead: String, third: String, fourth: String) {
+        return (sentences[index], sentences[index + ahead], sentences[index + 2], sentences[index + 3]) // +ahead for looking ahead of presenter
     }
     
     //assumes non-empty array and only 1 maximum value, could be 2 though
@@ -41,7 +41,7 @@ class Match
     }
     
     //need to check range limits when range is provided for efficient searching
-    func compareStringWithSentences(googleString spokenString:String) -> (current: String, ahead: String) {
+    func compareStringWithSentences(googleString spokenString:String) -> (current: String, ahead: String, third: String, fourth: String) {
         var allPercentages = [Double]()
         for index in 0..<range {
             allPercentages.append(matchPercentage(testString: spokenString.components(separatedBy: CharacterSet.whitespaces), matchAgainstIndex: index + min))

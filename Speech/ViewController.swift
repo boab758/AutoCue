@@ -25,17 +25,11 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     var audioData: NSMutableData!
     lazy var match = Match()
+    var firstString = ""
+    var secondString = ""
+    var thirdString = ""
+    var fourthString = ""
     
-    @IBOutlet weak var textLabelCurrent: UILabel! {
-        didSet {
-            textLabelCurrent.numberOfLines = 0
-        }
-    }
-    @IBOutlet weak var textLabelAhead: UILabel! {
-        didSet {
-            textLabelAhead.numberOfLines = 0
-        }
-    }
     
     @IBAction func login(_ sender: UIButton) {
         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
@@ -61,6 +55,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
         print("Success! Your speech has been imported. Press Start to start")
         print(destURL)
         do {
+            print("AJODJFOD")
             match.fakeInit(document: try String(contentsOf: destURL))
         } catch {
             print(error)
@@ -127,16 +122,19 @@ class ViewController : UIViewController, AudioControllerDelegate {
                     }
                     
                     if let error = error {
-                        strongSelf.textLabelCurrent.text = error.localizedDescription
-                        self?.textLabelCurrent.text = error.localizedDescription
+                        print(error.localizedDescription)
+                        print(error.localizedDescription)
                     } else if let response = response {
                         for result in response.resultsArray! {
                             if let result = result as? StreamingRecognitionResult {
                                 if result.isFinal {
                                     if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
                                         let presentedText = self?.match.compareStringWithSentences(googleString: result.transcript!)
-                                        self!.textLabelCurrent.text = presentedText?.current
-                                        self!.textLabelAhead.text = presentedText?.ahead
+                                        self?.firstString = (presentedText?.current)!
+                                        self?.secondString = (presentedText?.ahead)!
+                                        self?.thirdString = (presentedText?.third)!
+                                        self?.fourthString = (presentedText?.fourth)!
+                                        self?.animate(string1: (self?.firstString)!)
                                     }
                                 }
                             }
@@ -144,6 +142,59 @@ class ViewController : UIViewController, AudioControllerDelegate {
                     }
             })
             self.audioData = NSMutableData()
+        }
+    }
+    
+    @IBOutlet weak var Card1: CardView!
+    @IBOutlet weak var Card2: CardView!
+    var Card3 = CardView()
+    
+    
+    
+    @IBAction func start(_ sender: UIButton) {
+        let string1 = match.sentences[0]
+        print (string1)
+        let string2 = match.sentences[1]
+        let string3 = match.sentences[2]
+        Card3 = CardView(frame: CGRect(x:450, y:200, width: 240, height: 130)) //x:400/70y:200/340
+        Card3.backgroundColor = UIColor(white: 1, alpha: 0)
+        self.view.addSubview(Card3)
+        Card1.setString(str: string1)
+        Card2.setString(str: string2)
+        Card3.setString(str: string3)
+    }
+    
+    func animate(string1: String) {
+        let frame = Card1.frame
+        if string1 == Card1.getString() {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 0.6,
+                delay: 0,
+                options: UIViewAnimationOptions.curveEaseIn,
+                animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-50, y: 0)},
+                //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
+                completion: {finished in
+                    UIViewPropertyAnimator.runningPropertyAnimator(
+                        withDuration: 0.6,
+                        delay: 0,
+                        options: UIViewAnimationOptions.curveEaseIn,
+                        animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height)},
+                        completion: {finished in
+                            UIViewPropertyAnimator.runningPropertyAnimator(
+                                withDuration: 0.6,
+                                delay: 0,
+                                options: UIViewAnimationOptions.curveEaseIn,
+                                animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width, y: 0)},
+                                completion: {finished in
+                                    self.Card1.setString(str: self.secondString)
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    self.Card2.setString(str: self.thirdString)
+                                    self.Card2.transform = CGAffineTransform.identity
+                                    self.Card3.setString(str: self.fourthString)
+                                    self.Card3.transform = CGAffineTransform.identity
+                            })
+                    })
+            })
         }
     }
 }
