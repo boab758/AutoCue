@@ -10,15 +10,8 @@ import UIKit
 
 class CardView: UIView {
 
-    var speechText: String = "" {
-        didSet{
-            setNeedsDisplay()
-            setNeedsLayout()
-        }
-    }
-
-    
-    //lazy var speechLabel = createLabel()
+    private(set) var speechText: String = "" { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    private lazy var speechLabel = self.createLabel()
     
     func setString (str: String) {
         speechText = str
@@ -27,21 +20,20 @@ class CardView: UIView {
         return speechText
     }
     
-    func createLabel() -> UILabel{
+    private func createLabel() -> UILabel{
         let label = UILabel()
         label.numberOfLines = 0
         addSubview(label)
         return label
     }
     
-    func configureSpeechLabel(_ label: UILabel) {
+    private func configureSpeechLabel(_ label: UILabel) {
         label.text = speechText
         label.frame.size = bounds.size
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        var speechLabel = createLabel()
         configureSpeechLabel(speechLabel)
         let boundsOriginPoint = bounds.origin
         speechLabel.frame.origin = CGPoint(x: boundsOriginPoint.x+8, y: boundsOriginPoint.y+1)

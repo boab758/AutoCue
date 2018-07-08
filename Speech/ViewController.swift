@@ -155,10 +155,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     
     @IBAction func start(_ sender: UIButton) {
-        let string1 = match.sentences[0]
-        print (string1)
-        let string2 = match.sentences[1]
-        let string3 = match.sentences[2]
+        var string1:String// = match.sentences[0]
+        var string2:String// = match.sentences[1]
+        var string3:String// = match.sentences[2]
         Card1 = CardView(frame: CGRect(x:70, y:70, width: 260, height: 130)) //x:400/70y:200/340
         Card1.backgroundColor = UIColor(white: 1, alpha: 0)
         Card2 = CardView(frame: CGRect(x:70, y:225, width: 260, height: 130)) //x:400/70y:200/340
@@ -168,6 +167,11 @@ class ViewController : UIViewController, AudioControllerDelegate {
         self.view.addSubview(Card1)
         self.view.addSubview(Card2)
         self.view.addSubview(Card3)
+        //---remove below----
+        string1 = "Hi"
+        string2 = "the"
+        string3 = "wolf"
+        //---remove above-----
         Card3.setString(str: string3)
         Card2.setString(str: string2)
         Card1.setString(str: string1)
@@ -175,6 +179,20 @@ class ViewController : UIViewController, AudioControllerDelegate {
         
     }
     
+    @IBAction func test1(_ sender: UIButton) {
+        firstString = "Hi"
+        secondString = "the"
+        thirdString = "wolf"
+        fourthString = "is"
+        animate(string1: "Hi")
+    }
+    @IBAction func test2(_ sender: UIButton) {
+        firstString = "the"
+        secondString = "wolf"
+        thirdString = "is"
+        fourthString = "coming"
+        animate(string1: "the")
+    }
     func animate(string1: String) {
         let frame = Card1.frame
         if string1 == Card1.getString() {
