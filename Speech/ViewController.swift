@@ -155,9 +155,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     
     @IBAction func start(_ sender: UIButton) {
-        var string1:String// = match.sentences[0]
-        var string2:String// = match.sentences[1]
-        var string3:String// = match.sentences[2]
+        var string1 = match.sentences[0]
+        var string2 = match.sentences[1]
+        var string3 = match.sentences[2]
         Card1 = CardView(frame: CGRect(x:70, y:70, width: 260, height: 130)) //x:400/70y:200/340
         Card1.backgroundColor = UIColor(white: 1, alpha: 0)
         Card2 = CardView(frame: CGRect(x:70, y:225, width: 260, height: 130)) //x:400/70y:200/340
@@ -168,9 +168,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
         self.view.addSubview(Card2)
         self.view.addSubview(Card3)
         //---remove below----
-        string1 = "Hi"
-        string2 = "the"
-        string3 = "wolf"
+//        string1 = "Hi"
+//        string2 = "the"
+//        string3 = "wolf"
         //---remove above-----
         Card3.setString(str: string3)
         Card2.setString(str: string2)
