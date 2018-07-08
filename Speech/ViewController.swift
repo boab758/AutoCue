@@ -106,6 +106,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     }
     
     func processSampleData(_ data: Data) -> Void {
+        print ("JJJDJDJDJ")
         audioData.append(data)
         
         // We recommend sending samples in 100ms chunks
@@ -134,7 +135,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
                                         self?.secondString = (presentedText?.ahead)!
                                         self?.thirdString = (presentedText?.third)!
                                         self?.fourthString = (presentedText?.fourth)!
+                                        print ("DD")
                                         self?.animate(string1: (self?.firstString)!)
+                                        print("FF")
                                     }
                                 }
                             }
@@ -145,8 +148,8 @@ class ViewController : UIViewController, AudioControllerDelegate {
         }
     }
     
-    @IBOutlet weak var Card1: CardView!
-    @IBOutlet weak var Card2: CardView!
+    var Card1 = CardView()
+    var Card2 = CardView()
     var Card3 = CardView()
     
     
@@ -156,12 +159,20 @@ class ViewController : UIViewController, AudioControllerDelegate {
         print (string1)
         let string2 = match.sentences[1]
         let string3 = match.sentences[2]
-        Card3 = CardView(frame: CGRect(x:450, y:200, width: 240, height: 130)) //x:400/70y:200/340
+        Card1 = CardView(frame: CGRect(x:70, y:70, width: 260, height: 130)) //x:400/70y:200/340
+        Card1.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card2 = CardView(frame: CGRect(x:70, y:225, width: 260, height: 130)) //x:400/70y:200/340
+        Card2.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card3 = CardView(frame: CGRect(x:400, y:225, width: 260, height: 130)) //x:400/70y:200/340
         Card3.backgroundColor = UIColor(white: 1, alpha: 0)
+        self.view.addSubview(Card1)
+        self.view.addSubview(Card2)
         self.view.addSubview(Card3)
-        Card1.setString(str: string1)
-        Card2.setString(str: string2)
         Card3.setString(str: string3)
+        Card2.setString(str: string2)
+        Card1.setString(str: string1)
+        
+        
     }
     
     func animate(string1: String) {
