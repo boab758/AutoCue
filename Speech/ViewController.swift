@@ -30,6 +30,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var thirdString = ""
     var fourthString = ""
     
+    var jumpFactor: CGFloat = 40 // CHANGE THIS VALUE IF THE BOTTOM CARD JUMPS UP TO THE POSITION OF TOP CARD.INCREASE IT IF IT JUMPS UP AND VICE VERSA
+    var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
+    
     
     @IBAction func login(_ sender: UIButton) {
         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
@@ -106,7 +109,6 @@ class ViewController : UIViewController, AudioControllerDelegate {
     }
     
     func processSampleData(_ data: Data) -> Void {
-        print ("JJJDJDJDJ")
         audioData.append(data)
         
         // We recommend sending samples in 100ms chunks
@@ -153,24 +155,23 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var Card3 = CardView()
     
     
-    
     @IBAction func start(_ sender: UIButton) {
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
         var string3 = match.sentences[2]
-        Card1 = CardView(frame: CGRect(x:70, y:70, width: 260, height: 130)) //x:400/70y:200/340
+        Card1 = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
         Card1.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card2 = CardView(frame: CGRect(x:70, y:225, width: 260, height: 130)) //x:400/70y:200/340
+        Card2 = CardView(frame: CGRect(x:65, y:225, width: 270, height: 130)) //x:400/70y:200/340
         Card2.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card3 = CardView(frame: CGRect(x:400, y:225, width: 260, height: 130)) //x:400/70y:200/340
+        Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
         Card3.backgroundColor = UIColor(white: 1, alpha: 0)
         self.view.addSubview(Card1)
         self.view.addSubview(Card2)
         self.view.addSubview(Card3)
         //---remove below----
-//        string1 = "Hi"
-//        string2 = "the"
-//        string3 = "wolf"
+//        var string1 = "Hi"
+//        var string2 = "the"
+//        var string3 = "wolf"
         //---remove above-----
         Card3.setString(str: string3)
         Card2.setString(str: string2)
@@ -197,17 +198,17 @@ class ViewController : UIViewController, AudioControllerDelegate {
         let frame = Card1.frame
         if string1 == Card1.getString() {
             UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: 0.6,
+                withDuration: 0.4,
                 delay: 0,
                 options: UIViewAnimationOptions.curveEaseIn,
-                animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-50, y: 0)},
+                animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-70, y: 0)},
                 //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
                 completion: {finished in
                     UIViewPropertyAnimator.runningPropertyAnimator(
-                        withDuration: 0.6,
+                        withDuration: 0.5,
                         delay: 0,
                         options: UIViewAnimationOptions.curveEaseIn,
-                        animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height)},
+                        animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height+self.jumpFactor)},
                         completion: {finished in
                             UIViewPropertyAnimator.runningPropertyAnimator(
                                 withDuration: 0.6,
@@ -215,12 +216,21 @@ class ViewController : UIViewController, AudioControllerDelegate {
                                 options: UIViewAnimationOptions.curveEaseIn,
                                 animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width, y: 0)},
                                 completion: {finished in
-                                    self.Card1.setString(str: self.secondString)
-                                    self.Card1.transform = CGAffineTransform.identity
-                                    self.Card2.setString(str: self.thirdString)
-                                    self.Card2.transform = CGAffineTransform.identity
-                                    self.Card3.setString(str: self.fourthString)
-                                    self.Card3.transform = CGAffineTransform.identity
+                                    if self.disappearing {
+                                        self.Card3.setString(str: self.fourthString)
+                                        self.Card3.transform = CGAffineTransform.identity
+                                        self.Card2.setString(str: self.thirdString)
+                                        self.Card2.transform = CGAffineTransform.identity
+                                        self.Card1.setString(str: self.secondString)
+                                        self.Card1.transform = CGAffineTransform.identity
+                                    } else if !(self.disappearing) {
+                                        self.Card1.setString(str: self.secondString)
+                                        self.Card1.transform = CGAffineTransform.identity
+                                        self.Card2.setString(str: self.thirdString)
+                                        self.Card2.transform = CGAffineTransform.identity
+                                        self.Card3.setString(str: self.fourthString)
+                                        self.Card3.transform = CGAffineTransform.identity
+                                    }
                             })
                     })
             })
