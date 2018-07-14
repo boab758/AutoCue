@@ -29,7 +29,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var secondString = ""
     var thirdString = ""
     var fourthString = ""
-    var index = -1
+    var index = 0
     
     var jumpFactor: CGFloat = 20 // CHANGE THIS VALUE IF THE BOTTOM CARD JUMPS UP TO THE POSITION OF TOP CARD.INCREASE IT IF IT JUMPS UP AND VICE VERSA
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
@@ -160,7 +160,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     @IBAction func start(_ sender: UIButton) {
         //ADD BELOW FOR TESTING
-        match.fakeInit(document: "")
+        //match.fakeInit(document: "")
         //ADD ABOVE FOR TESTING
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
@@ -198,19 +198,31 @@ class ViewController : UIViewController, AudioControllerDelegate {
         Card2.addGestureRecognizer(swipe4)
     }
     
+    var isAni = true
     @objc func standInAnimate() {
         print("FORWARD")
         index += 1
+        print(index)
+        isAni = true
+        print("isAni is \(isAni)")
         animate()
     }
     @objc func standInAnimateBack() {
         print("BACKWARD")
-        if index-1 == -1 {
+        if index-1 <= -1 {
             index = 0
+            if isAni {
+                animateBack()
+            }
         } else {
             index -= 1
+            print(isAni)
+            if index == 0 {
+                isAni = false
+            }
+            animateBack()
         }
-        animateBack()
+        print(index)
     }
     
     @IBAction func test1(_ sender: UIButton) {
@@ -293,21 +305,22 @@ class ViewController : UIViewController, AudioControllerDelegate {
                             completion: {finished in
                                 if self.disappearing {
                                     self.Card4.setString(str: self.Card1.getString())
-                                    self.Card3.setString(str: self.match.sentences[self.index+3])
+                                    self.Card3.setString(str: self.match.sentences[self.index+2])
                                     self.Card3.transform = CGAffineTransform.identity
                                     print("CARD3 IS BACK")
-                                    self.Card2.setString(str: self.match.sentences[self.index+2])
+                                    self.Card2.setString(str: self.match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
                                     print("CARD2 IS BACK")
-                                    self.Card1.setString(str: self.match.sentences[self.index+1])
+                                    self.Card1.setString(str: self.match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
                                     print("CARD1 IS BACK")
                                 } else if !(self.disappearing) {
-                                    self.Card1.setString(str: self.match.sentences[self.index+1])
+                                    self.Card4.setString(str: self.Card1.getString())
+                                    self.Card1.setString(str: self.match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    self.Card2.setString(str: self.match.sentences[self.index+2])
+                                    self.Card2.setString(str: self.match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
-                                    self.Card3.setString(str: self.match.sentences[self.index+3])
+                                    self.Card3.setString(str: self.match.sentences[self.index+2])
                                     self.Card3.transform = CGAffineTransform.identity
                                 }
                         })
