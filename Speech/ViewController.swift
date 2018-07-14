@@ -31,7 +31,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var fourthString = ""
     var index = -1
     
-    var jumpFactor: CGFloat = 40 // CHANGE THIS VALUE IF THE BOTTOM CARD JUMPS UP TO THE POSITION OF TOP CARD.INCREASE IT IF IT JUMPS UP AND VICE VERSA
+    var jumpFactor: CGFloat = 20 // CHANGE THIS VALUE IF THE BOTTOM CARD JUMPS UP TO THE POSITION OF TOP CARD.INCREASE IT IF IT JUMPS UP AND VICE VERSA
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
     
     
@@ -155,11 +155,12 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var Card1 = CardView()
     var Card2 = CardView()
     var Card3 = CardView()
+    var Card4 = CardView()
     
     
     @IBAction func start(_ sender: UIButton) {
         //ADD BELOW FOR TESTING
-        //match.fakeInit(document: "")
+        match.fakeInit(document: "")
         //ADD ABOVE FOR TESTING
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
@@ -170,32 +171,46 @@ class ViewController : UIViewController, AudioControllerDelegate {
         Card2.backgroundColor = UIColor(white: 1, alpha: 0)
         Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
         Card3.backgroundColor = UIColor(white: 1, alpha: 0)
-        addGestures(Card1: Card1, Card2: Card2, Card3: Card3)
+        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 270, height: 130))
+        Card4.backgroundColor = UIColor(white: 1, alpha: 0)
+        addGestures(Card1: Card1, Card2: Card2)
         self.view.addSubview(Card1)
         self.view.addSubview(Card2)
         self.view.addSubview(Card3)
-        //---remove below----
-//        var string1 = "Hi"
-//        var string2 = "the"
-//        var string3 = "wolf"
-        //---remove above-----
+        self.view.addSubview(Card4)
         Card3.setString(str: string3)
         Card2.setString(str: string2)
         Card1.setString(str: string1)
     }
     
-    func addGestures(Card1: CardView, Card2: CardView, Card3: CardView) {
+    func addGestures(Card1: CardView, Card2: CardView) {
         let swipe1 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
         swipe1.direction = .left
         let swipe2 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
         swipe2.direction = .up
+        let swipe3 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimateBack))
+        swipe3.direction = .down
+        let swipe4 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimateBack))
+        swipe4.direction = .right
         Card1.addGestureRecognizer(swipe1)
+        Card1.addGestureRecognizer(swipe3)
         Card2.addGestureRecognizer(swipe2)
+        Card2.addGestureRecognizer(swipe4)
     }
     
     @objc func standInAnimate() {
+        print("FORWARD")
         index += 1
         animate()
+    }
+    @objc func standInAnimateBack() {
+        print("BACKWARD")
+        if index-1 == -1 {
+            index = 0
+        } else {
+            index -= 1
+        }
+        animateBack()
     }
     
     @IBAction func test1(_ sender: UIButton) {
@@ -207,46 +222,97 @@ class ViewController : UIViewController, AudioControllerDelegate {
         animate()
     }
     
-    @objc func animate() {
+    func animateBack() {
         let frame = Card1.frame
         //if string1 == Card1.getString() {
-            UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: 0.4,
-                delay: 0,
-                options: UIViewAnimationOptions.curveEaseIn,
-                animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-70, y: 0)},
-                //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
-                completion: {finished in
-                    UIViewPropertyAnimator.runningPropertyAnimator(
-                        withDuration: 0.5,
-                        delay: 0,
-                        options: UIViewAnimationOptions.curveEaseIn,
-                        animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height+self.jumpFactor)},
-                        completion: {finished in
-                            UIViewPropertyAnimator.runningPropertyAnimator(
-                                withDuration: 0.6,
-                                delay: 0,
-                                options: UIViewAnimationOptions.curveEaseIn,
-                                animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width, y: 0)},
-                                completion: {finished in
-                                    if self.disappearing {
-                                        self.Card3.setString(str: self.match.sentences[self.index+3])
-                                        self.Card3.transform = CGAffineTransform.identity
-                                        self.Card2.setString(str: self.match.sentences[self.index+2])
-                                        self.Card2.transform = CGAffineTransform.identity
-                                        self.Card1.setString(str: self.match.sentences[self.index+1])
-                                        self.Card1.transform = CGAffineTransform.identity
-                                    } else if !(self.disappearing) {
-                                        self.Card1.setString(str: self.match.sentences[self.index+1])
-                                        self.Card1.transform = CGAffineTransform.identity
-                                        self.Card2.setString(str: self.match.sentences[self.index+2])
-                                        self.Card2.transform = CGAffineTransform.identity
-                                        self.Card3.setString(str: self.match.sentences[self.index+3])
-                                        self.Card3.transform = CGAffineTransform.identity
-                                    }
-                            })
-                    })
-            })
-        }
+        UIViewPropertyAnimator.runningPropertyAnimator(
+            withDuration: 0.4,
+            delay: 0,
+            options: UIViewAnimationOptions.curveEaseIn,
+            animations: {self.Card4.transform = CGAffineTransform.identity.translatedBy(x: 345, y: 0)},
+            //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
+            completion: {finished in
+                UIViewPropertyAnimator.runningPropertyAnimator(
+                    withDuration: 0.5,
+                    delay: 0,
+                    options: UIViewAnimationOptions.curveEaseIn,
+                    animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: 0, y: frame.size.height+self.jumpFactor)},
+                    completion: {finished in
+                        UIViewPropertyAnimator.runningPropertyAnimator(
+                            withDuration: 0.6,
+                            delay: 0,
+                            options: UIViewAnimationOptions.curveEaseIn,
+                            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width, y: 0)},
+                            completion: {finished in
+                                if self.index > 0 {
+                                    self.Card2.setString(str: self.match.sentences[self.index+1])
+                                    self.Card2.transform = CGAffineTransform.identity
+                                    print("CARD2 IS BACK")
+                                    self.Card1.setString(str: self.match.sentences[self.index])
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    print("CARD1 IS BACK")
+                                    self.Card4.setString(str: self.match.sentences[self.index-1])
+                                    self.Card4.transform = CGAffineTransform.identity
+                                    print("CARD4 IS BACK")
+                                } else {
+                                    self.Card2.setString(str: self.match.sentences[self.index+1])
+                                    self.Card2.transform = CGAffineTransform.identity
+                                    print("CARD2 IS BACK")
+                                    self.Card1.setString(str: self.match.sentences[self.index])
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    print("CARD4 IS BACK")
+                                    self.Card4.setString(str: self.match.sentences[self.index])
+                                    self.Card4.transform = CGAffineTransform.identity
+                                }
+                        })
+                })
+        })
+    }
+    
+    func animate() {
+        let frame = Card1.frame
+        //if string1 == Card1.getString() {
+        UIViewPropertyAnimator.runningPropertyAnimator(
+            withDuration: 0.4,
+            delay: 0,
+            options: UIViewAnimationOptions.curveEaseIn,
+            animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-70, y: 0)},
+            //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
+            completion: {finished in
+                UIViewPropertyAnimator.runningPropertyAnimator(
+                    withDuration: 0.5,
+                    delay: 0,
+                    options: UIViewAnimationOptions.curveEaseIn,
+                    animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height+self.jumpFactor)},
+                    completion: {finished in
+                        UIViewPropertyAnimator.runningPropertyAnimator(
+                            withDuration: 0.6,
+                            delay: 0,
+                            options: UIViewAnimationOptions.curveEaseIn,
+                            animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width, y: 0)},
+                            completion: {finished in
+                                if self.disappearing {
+                                    self.Card4.setString(str: self.Card1.getString())
+                                    self.Card3.setString(str: self.match.sentences[self.index+3])
+                                    self.Card3.transform = CGAffineTransform.identity
+                                    print("CARD3 IS BACK")
+                                    self.Card2.setString(str: self.match.sentences[self.index+2])
+                                    self.Card2.transform = CGAffineTransform.identity
+                                    print("CARD2 IS BACK")
+                                    self.Card1.setString(str: self.match.sentences[self.index+1])
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    print("CARD1 IS BACK")
+                                } else if !(self.disappearing) {
+                                    self.Card1.setString(str: self.match.sentences[self.index+1])
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    self.Card2.setString(str: self.match.sentences[self.index+2])
+                                    self.Card2.transform = CGAffineTransform.identity
+                                    self.Card3.setString(str: self.match.sentences[self.index+3])
+                                    self.Card3.transform = CGAffineTransform.identity
+                                }
+                        })
+                })
+        })
+    }
     //}
 }

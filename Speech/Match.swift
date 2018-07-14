@@ -25,7 +25,7 @@ class Match
     
     func fakeInit(document:String){
         //REMOVE BELOW FOR TESTING
-        str = document
+        //str = document
         //REMOVE TOP FOR TESTING
         sentences = paragraphToSentence(string: str)
         for index in sentences.indices {
