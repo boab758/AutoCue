@@ -24,16 +24,19 @@ class Match
     private var mergeThreshold = 15
     
     func fakeInit(document:String){
+        //REMOVE BELOW FOR TESTING
         str = document
+        //REMOVE TOP FOR TESTING
         sentences = paragraphToSentence(string: str)
         for index in sentences.indices {
             sentencesWordCount[index] = sentences[index].components(separatedBy:CharacterSet.whitespaces).count
         }
     }
     
-    func stringForViewController(index:Int) -> (current: String, ahead: String, third: String, fourth: String) {
-        return (sentences[index], sentences[index + ahead], sentences[index + 2], sentences[index + 3]) // +ahead for looking ahead of presenter
+    func stringForViewController(index:Int) -> (current: String, ahead: String, third: String, fourth: String, idx: Int) {
+        return (sentences[index], sentences[index + ahead], sentences[index + 2], sentences[index + 3], index) // +ahead for looking ahead of presenter
     }
+    
     
     //assumes non-empty array and only 1 maximum value, could be 2 though
     private func highestProbabilityStringIndex(probabilityArray:[Double]) -> Int {
@@ -41,7 +44,7 @@ class Match
     }
     
     //need to check range limits when range is provided for efficient searching
-    func compareStringWithSentences(googleString spokenString:String) -> (current: String, ahead: String, third: String, fourth: String) {
+    func compareStringWithSentences(googleString spokenString:String) -> (current: String, ahead: String, third: String, fourth: String, idx: Int) {
         var allPercentages = [Double]()
         for index in 0..<range {
             allPercentages.append(matchPercentage(testString: spokenString.components(separatedBy: CharacterSet.whitespaces), matchAgainstIndex: index + min))

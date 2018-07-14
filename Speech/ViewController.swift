@@ -29,6 +29,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var secondString = ""
     var thirdString = ""
     var fourthString = ""
+    var index = -1
     
     var jumpFactor: CGFloat = 40 // CHANGE THIS VALUE IF THE BOTTOM CARD JUMPS UP TO THE POSITION OF TOP CARD.INCREASE IT IF IT JUMPS UP AND VICE VERSA
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
@@ -138,7 +139,8 @@ class ViewController : UIViewController, AudioControllerDelegate {
                                         self?.thirdString = (presentedText?.third)!
                                         self?.fourthString = (presentedText?.fourth)!
                                         print ("DD")
-                                        self?.animate(string1: (self?.firstString)!)
+                                        self?.index = (presentedText?.idx)!
+                                        self?.animate()
                                         print("FF")
                                     }
                                 }
@@ -156,6 +158,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     
     @IBAction func start(_ sender: UIButton) {
+        //ADD BELOW FOR TESTING
+        //match.fakeInit(document: "")
+        //ADD ABOVE FOR TESTING
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
         var string3 = match.sentences[2]
@@ -165,6 +170,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
         Card2.backgroundColor = UIColor(white: 1, alpha: 0)
         Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
         Card3.backgroundColor = UIColor(white: 1, alpha: 0)
+        addGestures(Card1: Card1, Card2: Card2, Card3: Card3)
         self.view.addSubview(Card1)
         self.view.addSubview(Card2)
         self.view.addSubview(Card3)
@@ -176,27 +182,34 @@ class ViewController : UIViewController, AudioControllerDelegate {
         Card3.setString(str: string3)
         Card2.setString(str: string2)
         Card1.setString(str: string1)
-        
-        
+    }
+    
+    func addGestures(Card1: CardView, Card2: CardView, Card3: CardView) {
+        let swipe1 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
+        swipe1.direction = .left
+        let swipe2 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
+        swipe2.direction = .up
+        Card1.addGestureRecognizer(swipe1)
+        Card2.addGestureRecognizer(swipe2)
+    }
+    
+    @objc func standInAnimate() {
+        index += 1
+        animate()
     }
     
     @IBAction func test1(_ sender: UIButton) {
-        firstString = "Hi"
-        secondString = "the"
-        thirdString = "wolf"
-        fourthString = "is"
-        animate(string1: "Hi")
+        index = 0
+        animate()
     }
     @IBAction func test2(_ sender: UIButton) {
-        firstString = "the"
-        secondString = "wolf"
-        thirdString = "is"
-        fourthString = "coming"
-        animate(string1: "the")
+        index = 1
+        animate()
     }
-    func animate(string1: String) {
+    
+    @objc func animate() {
         let frame = Card1.frame
-        if string1 == Card1.getString() {
+        //if string1 == Card1.getString() {
             UIViewPropertyAnimator.runningPropertyAnimator(
                 withDuration: 0.4,
                 delay: 0,
@@ -217,23 +230,23 @@ class ViewController : UIViewController, AudioControllerDelegate {
                                 animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width, y: 0)},
                                 completion: {finished in
                                     if self.disappearing {
-                                        self.Card3.setString(str: self.fourthString)
+                                        self.Card3.setString(str: self.match.sentences[self.index+3])
                                         self.Card3.transform = CGAffineTransform.identity
-                                        self.Card2.setString(str: self.thirdString)
+                                        self.Card2.setString(str: self.match.sentences[self.index+2])
                                         self.Card2.transform = CGAffineTransform.identity
-                                        self.Card1.setString(str: self.secondString)
+                                        self.Card1.setString(str: self.match.sentences[self.index+1])
                                         self.Card1.transform = CGAffineTransform.identity
                                     } else if !(self.disappearing) {
-                                        self.Card1.setString(str: self.secondString)
+                                        self.Card1.setString(str: self.match.sentences[self.index+1])
                                         self.Card1.transform = CGAffineTransform.identity
-                                        self.Card2.setString(str: self.thirdString)
+                                        self.Card2.setString(str: self.match.sentences[self.index+2])
                                         self.Card2.transform = CGAffineTransform.identity
-                                        self.Card3.setString(str: self.fourthString)
+                                        self.Card3.setString(str: self.match.sentences[self.index+3])
                                         self.Card3.transform = CGAffineTransform.identity
                                     }
                             })
                     })
             })
         }
-    }
+    //}
 }
