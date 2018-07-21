@@ -30,8 +30,11 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var thirdString = ""
     var fourthString = ""
     var index = 0
-    
-    var jumpFactor: CGFloat = 20 // CHANGE THIS VALUE IF THE BOTTOM CARD JUMPS UP TO THE POSITION OF TOP CARD.INCREASE IT IF IT JUMPS UP AND VICE VERSA
+    var Card1 = CardView()
+    var Card2 = CardView()
+    var Card3 = CardView()
+    var Card4 = CardView()
+
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
     
     
@@ -152,51 +155,12 @@ class ViewController : UIViewController, AudioControllerDelegate {
         }
     }
     
-    var Card1 = CardView()
-    var Card2 = CardView()
-    var Card3 = CardView()
-    var Card4 = CardView()
+
     
     
-    @IBAction func start(_ sender: UIButton) {
-        //ADD BELOW FOR TESTING
-        //match.fakeInit(document: "")
-        //ADD ABOVE FOR TESTING
-        var string1 = match.sentences[0]
-        var string2 = match.sentences[1]
-        var string3 = match.sentences[2]
-        Card1 = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
-        Card1.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card2 = CardView(frame: CGRect(x:65, y:225, width: 270, height: 130)) //x:400/70y:200/340
-        Card2.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
-        Card3.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 270, height: 130))
-        Card4.backgroundColor = UIColor(white: 1, alpha: 0)
-        addGestures(Card1: Card1, Card2: Card2)
-        self.view.addSubview(Card1)
-        self.view.addSubview(Card2)
-        self.view.addSubview(Card3)
-        self.view.addSubview(Card4)
-        Card3.setString(str: string3)
-        Card2.setString(str: string2)
-        Card1.setString(str: string1)
-    }
+
     
-    func addGestures(Card1: CardView, Card2: CardView) {
-        let swipe1 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
-        swipe1.direction = .left
-        let swipe2 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
-        swipe2.direction = .up
-        let swipe3 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimateBack))
-        swipe3.direction = .down
-        let swipe4 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimateBack))
-        swipe4.direction = .right
-        Card1.addGestureRecognizer(swipe1)
-        Card1.addGestureRecognizer(swipe3)
-        Card2.addGestureRecognizer(swipe2)
-        Card2.addGestureRecognizer(swipe4)
-    }
+
     
     var isAni = true
     @objc func standInAnimate() {
@@ -223,15 +187,6 @@ class ViewController : UIViewController, AudioControllerDelegate {
             animateBack()
         }
         print(index)
-    }
-    
-    @IBAction func test1(_ sender: UIButton) {
-        index = 0
-        animate()
-    }
-    @IBAction func test2(_ sender: UIButton) {
-        index = 1
-        animate()
     }
     
     func animateBack() {
@@ -283,6 +238,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     func animate() {
         let frame = Card1.frame
+        self.index+=1
         //if string1 == Card1.getString() {
         UIViewPropertyAnimator.runningPropertyAnimator(
             withDuration: 0.4,
@@ -307,13 +263,13 @@ class ViewController : UIViewController, AudioControllerDelegate {
                                     self.Card4.setString(str: self.Card1.getString())
                                     self.Card3.setString(str: self.match.sentences[self.index+2])
                                     self.Card3.transform = CGAffineTransform.identity
-                                    print("CARD3 IS BACK")
+                                    print("CARD3 IS BACK and: \(self.match.sentences[self.index+2])")
                                     self.Card2.setString(str: self.match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
-                                    print("CARD2 IS BACK")
+                                    print("CARD2 IS BACK and: \(self.match.sentences[self.index+1])")
                                     self.Card1.setString(str: self.match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    print("CARD1 IS BACK")
+                                    print("CARD1 IS BACK and: \(self.match.sentences[self.index])")
                                 } else if !(self.disappearing) {
                                     self.Card4.setString(str: self.Card1.getString())
                                     self.Card1.setString(str: self.match.sentences[self.index])
@@ -328,4 +284,75 @@ class ViewController : UIViewController, AudioControllerDelegate {
         })
     }
     //}
+    
+    func cardInit() {
+        //ADD BELOW FOR TESTING
+        match.fakeInit(document: "")
+        //ADD ABOVE FOR TESTING
+        var string1 = match.sentences[0]
+        var string2 = match.sentences[1]
+        var string3 = match.sentences[2]
+        Card1 = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
+        Card1.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card2 = CardView(frame: CGRect(x:65, y:225, width: 270, height: 130)) //x:400/70y:200/340
+        Card2.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
+        Card3.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 270, height: 130))
+        Card4.backgroundColor = UIColor(white: 1, alpha: 0)
+        addGestures(Card1: Card1, Card2: Card2)
+        self.view.addSubview(Card1)
+        self.view.addSubview(Card2)
+        self.view.addSubview(Card3)
+        self.view.addSubview(Card4)
+        Card3.setString(str: string3)
+        Card2.setString(str: string2)
+        Card1.setString(str: string1)
+    }
+    func addGestures(Card1: CardView, Card2: CardView) {
+        let swipe1 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
+        swipe1.direction = .left
+        let swipe2 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimate))
+        swipe2.direction = .up
+        let swipe3 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimateBack))
+        swipe3.direction = .down
+        let swipe4 = UISwipeGestureRecognizer(target: self, action: #selector(standInAnimateBack))
+        swipe4.direction = .right
+        Card1.addGestureRecognizer(swipe1)
+        Card1.addGestureRecognizer(swipe3)
+        Card2.addGestureRecognizer(swipe2)
+        Card2.addGestureRecognizer(swipe4)
+    }
+    @IBAction func start(_ sender: UIButton) {
+        //ADD BELOW FOR TESTING
+        match.fakeInit(document: "")
+        //ADD ABOVE FOR TESTING
+        var string1 = match.sentences[0]
+        var string2 = match.sentences[1]
+        var string3 = match.sentences[2]
+        Card1 = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
+        Card1.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card2 = CardView(frame: CGRect(x:65, y:225, width: 270, height: 130)) //x:400/70y:200/340
+        Card2.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
+        Card3.backgroundColor = UIColor(white: 1, alpha: 0)
+        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 270, height: 130))
+        Card4.backgroundColor = UIColor(white: 1, alpha: 0)
+        addGestures(Card1: Card1, Card2: Card2)
+        self.view.addSubview(Card1)
+        self.view.addSubview(Card2)
+        self.view.addSubview(Card3)
+        self.view.addSubview(Card4)
+        Card3.setString(str: string3)
+        Card2.setString(str: string2)
+        Card1.setString(str: string1)
+    }
+    @IBAction func test1(_ sender: UIButton) {
+        index = 0
+        animate()
+    }
+    @IBAction func test2(_ sender: UIButton) {
+        index = 1
+        animate()
+    }
 }
