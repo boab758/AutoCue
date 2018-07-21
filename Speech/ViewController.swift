@@ -248,13 +248,13 @@ class ViewController : UIViewController, AudioControllerDelegate {
                     withDuration: 0.5,
                     delay: 0,
                     options: UIViewAnimationOptions.curveEaseIn,
-                    animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: 0, y: frame.size.height+self.jumpFactor)},
+                    animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: 0, y: frame.size.height+20)},
                     completion: {finished in
                         UIViewPropertyAnimator.runningPropertyAnimator(
                             withDuration: 0.6,
                             delay: 0,
                             options: UIViewAnimationOptions.curveEaseIn,
-                            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width, y: 0)},
+                            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width+60, y: 0)},
                             completion: {finished in
                                 if self.index > 0 {
                                     self.Card2.setString(str: self.match.sentences[self.index+1])
@@ -295,13 +295,13 @@ class ViewController : UIViewController, AudioControllerDelegate {
                     withDuration: 0.5,
                     delay: 0,
                     options: UIViewAnimationOptions.curveEaseIn,
-                    animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height+self.jumpFactor)},
+                    animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height-20)},
                     completion: {finished in
                         UIViewPropertyAnimator.runningPropertyAnimator(
                             withDuration: 0.6,
                             delay: 0,
                             options: UIViewAnimationOptions.curveEaseIn,
-                            animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width, y: 0)},
+                            animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-65, y: 0)},
                             completion: {finished in
                                 if self.disappearing {
                                     self.Card4.setString(str: self.Card1.getString())
