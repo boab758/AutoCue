@@ -34,15 +34,32 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var Card2 = CardView()
     var Card3 = CardView()
     var Card4 = CardView()
-
+    
+    var pathVar = ""
+    
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
     
+    @IBOutlet weak var pathField: UITextField! {
+        didSet {
+            pathField.placeholder = "Enter text here"
+            pathField.font = UIFont.systemFont(ofSize: 15)
+            pathField.borderStyle = UITextBorderStyle.roundedRect
+            pathField.autocorrectionType = UITextAutocorrectionType.no
+            pathField.keyboardType = UIKeyboardType.default
+            pathField.returnKeyType = UIReturnKeyType.done
+            pathField.clearButtonMode = UITextFieldViewMode.whileEditing;
+        }
+    }
+    @IBAction func editChange(_ sender: Any) {
+        pathVar = pathField.text!
+    }
     
     @IBAction func login(_ sender: UIButton) {
         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
     }
     
     @IBAction func download(_ sender: UIButton) {
+        print(pathVar)
         let client = DropboxClientsManager.authorizedClient
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -50,7 +67,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
         let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
             return destURL
         }
-        client!.files.download(path: "/test.txt", overwrite: true, destination: destination).response {response, error in
+        client!.files.download(path: pathVar, overwrite: true, destination: destination).response {response, error in
             if let response = response {
                 print (response)
             } else if let error = error {
@@ -287,7 +304,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     func cardInit() {
         //ADD BELOW FOR TESTING
-        match.fakeInit(document: "")
+        //match.fakeInit(document: "")
         //ADD ABOVE FOR TESTING
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
@@ -325,7 +342,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
     }
     @IBAction func start(_ sender: UIButton) {
         //ADD BELOW FOR TESTING
-        match.fakeInit(document: "")
+        //match.fakeInit(document: "")
         //ADD ABOVE FOR TESTING
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
