@@ -22,7 +22,7 @@ import Foundation //only needed for Time API
 let SAMPLE_RATE = 16000
 
 class ViewController : UIViewController, AudioControllerDelegate {
-    
+    //MARK: variables
     var audioData: NSMutableData!
     lazy var match = Match()
     var firstString = ""
@@ -34,12 +34,15 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var Card2 = CardView()
     var Card3 = CardView()
     var Card4 = CardView()
+    var errorCard = CardView()
     
     var pathVar = ""
     
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
 
     static var numOfDownloads = 0
+    var errorOccured = false
+    var hasLogin = false
     
     @IBOutlet weak var pathField: UITextField! {
         didSet {
@@ -58,66 +61,80 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     @IBAction func login(_ sender: UIButton) {
         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
+        hasLogin = true
     }
     
     //MARK: download
     @IBAction func download(_ sender: UIButton) {
-        ViewController.numOfDownloads += 1
         print(pathVar)
+        if ViewController.numOfDownloads > 0 {
+            Card1.removeFromSuperview()
+            Card2.removeFromSuperview()
+            Card3.removeFromSuperview()
+            Card4.removeFromSuperview()
+            ViewController.numOfDownloads = 0
+        }
+        if errorOccured {
+            errorCard.removeFromSuperview()
+            errorOccured = false
+            print("1")
+        }
+        if !hasLogin {
+            errorCardInit(errorParam: "Have you logged in successfully? Try again after logging in.")
+            errorOccured = true
+            print("2")
+            return
+        }
+        if pathVar.prefix(1) != "/" {
+            print(pathVar.prefix(0))
+            errorCardInit(errorParam: "Please preface path with \"/\"")
+            errorOccured = true
+            print("3")
+            return
+        }
+        if pathVar.suffix(4) != ".txt" {
+            errorCardInit(errorParam: "We only accept txt files at the moment.")
+            errorOccured = true
+            print("4")
+            return
+        }
+        print("5")
         let client = DropboxClientsManager.authorizedClient
-//        client!.files.download(path: pathVar).response { response, error in
-//            if let response = response {
-//                let responseMetadata = response.0
-//                print("RESPONSE METADATA IS: \(responseMetadata)")
-//                let fileContents = response.1
-//                print("FILE CONTENTS IS: \(fileContents)")
-//                let time2 = String(data: fileContents, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue)) as String!
-//                print(time2)
-////                let time = fileContents.stringEncoding(data: Data,
-////                    opts: [StringEncodingDetectionOptionsKey:Any]?,
-////                    string: AutoreleasingUnsafeMutablePointer<NSString?>?,
-////                    usedLossyConversoin: UnsafeMutablePointer<ObjCBol>?)
-//                print ("HERE BE DRAGONS")
-//            } else if let error = error {
-//                print(error)
-//            }
-//        }
-//            .progress {progressData in
-//            print(progressData)
-//        }
-        
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let destURL2 = directoryURL.appendingPathComponent("tempDir")//myTestFile will be the file name
         let destination2: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
             return destURL2
         }
-        if ViewController.numOfDownloads > 1 {
-            Card1.removeFromSuperview()
-            Card2.removeFromSuperview()
-            Card3.removeFromSuperview()
-            Card4.removeFromSuperview()
-        }
         client!.files.download(path: pathVar, overwrite: true, destination: destination2).response {response, error in
             if let response = response {
                 print ("response is: \(response)")
                 do {
                     var encoding: String.Encoding = .ascii
-                    //var stringer2 = try String(contentsOf: destURL2, usedEncoding: &encoding)
-                    //print(stringer2)
                     self.match.fakeInit(document: try String(contentsOf: destURL2, usedEncoding: &encoding))
+                    self.cardInit()
+                    ViewController.numOfDownloads += 1
                 } catch {
+                    self.errorOccured = true
+                    self.errorCardInit(errorParam: error as! String)
                     print ("the error in response is \(error)")
                 }
             } else if let error = error {
+                self.errorOccured = true
+                self.errorCardInit(errorParam: (error as! Error) as! String)
                 print (error)
             }
             }
             .progress {progressData in print(progressData)
         }
     }
-        
     
+    func errorCardInit(errorParam: String) {
+        self.errorCard = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
+        self.errorCard.backgroundColor = UIColor.red
+        self.errorCard.setString(str: errorParam)
+        self.view.addSubview(self.errorCard)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         AudioController.sharedInstance.delegate = self
@@ -284,7 +301,8 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     func animate() {
         let frame = Card1.frame
-        self.index+=1
+        //self.index+=1
+        //ABOVE
         //if string1 == Card1.getString() {
         UIViewPropertyAnimator.runningPropertyAnimator(
             withDuration: 0.4,
