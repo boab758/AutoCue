@@ -1,4 +1,4 @@
-//
+	//
 // Copyright 2016 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,10 +38,12 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var pathVar = ""
     
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
+
+    static var numOfDownloads = 0
     
     @IBOutlet weak var pathField: UITextField! {
         didSet {
-            pathField.placeholder = "Enter text here"
+            pathField.placeholder = "Enter path here"
             pathField.font = UIFont.systemFont(ofSize: 15)
             pathField.borderStyle = UITextBorderStyle.roundedRect
             pathField.autocorrectionType = UITextAutocorrectionType.no
@@ -58,31 +60,36 @@ class ViewController : UIViewController, AudioControllerDelegate {
         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
     }
     
+    //MARK: download
     @IBAction func download(_ sender: UIButton) {
+        ViewController.numOfDownloads += 1
         print(pathVar)
         let client = DropboxClientsManager.authorizedClient
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let destURL = directoryURL.appendingPathComponent("myTestFile")//myTestFile will be the file name
-        let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
-            return destURL
+        let destURL2 = directoryURL.appendingPathComponent("tempDir")//myTestFile will be the file name
+        let destination2: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
+            return destURL2
         }
-        client!.files.download(path: pathVar, overwrite: true, destination: destination).response {response, error in
+        if ViewController.numOfDownloads > 1 {
+            Card1.removeFromSuperview()
+            Card2.removeFromSuperview()
+            Card3.removeFromSuperview()
+            Card4.removeFromSuperview()
+        }
+        client!.files.download(path: pathVar, overwrite: true, destination: destination2).response {response, error in
             if let response = response {
-                print (response)
+                print ("response is: \(response)")
+                do {
+                self.match.fakeInit(document: try String(contentsOf: destURL2, encoding: .utf8))
+                } catch {
+                    print ("the error in response is \(error)")
+                }
             } else if let error = error {
                 print (error)
             }
             }
             .progress {progressData in print(progressData)
-        }
-        print("Success! Your speech has been imported. Press Start to start")
-        print(destURL)
-        do {
-            print("AJODJFOD")
-            match.fakeInit(document: try String(contentsOf: destURL))
-        } catch {
-            print(error)
         }
     }
         
@@ -90,13 +97,11 @@ class ViewController : UIViewController, AudioControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         AudioController.sharedInstance.delegate = self
-        
-        
-//        textLabelCurrent.text = match.stringForViewController(index: 0).current
-//        textLabelAhead.text = match.stringForViewController(index: 0).ahead
     }
     
+    //MARK: big start
     @IBAction func recordAudio(_ sender: UIButton) {
+        cardInit()
         startStream()
         Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(timeController), userInfo: nil, repeats: true)
     }
@@ -178,7 +183,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
 
     
 
-    
+    //MARK: animate
     var isAni = true
     @objc func standInAnimate() {
         print("FORWARD")
@@ -340,6 +345,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
         Card2.addGestureRecognizer(swipe2)
         Card2.addGestureRecognizer(swipe4)
     }
+    //MARK: small start
     @IBAction func start(_ sender: UIButton) {
         //ADD BELOW FOR TESTING
         //match.fakeInit(document: "")
@@ -360,6 +366,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
         self.view.addSubview(Card2)
         self.view.addSubview(Card3)
         self.view.addSubview(Card4)
+        print(string1)
         Card3.setString(str: string3)
         Card2.setString(str: string2)
         Card1.setString(str: string1)

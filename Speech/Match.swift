@@ -34,7 +34,11 @@ class Match
     }
     
     func stringForViewController(index:Int) -> (current: String, ahead: String, third: String, fourth: String, idx: Int) {
+        if index+3 > sentences.count-1 {
+            return (sentences[index], sentences[index + ahead], sentences[index + 2], "End of Speech", index)
+        } else {
         return (sentences[index], sentences[index + ahead], sentences[index + 2], sentences[index + 3], index) // +ahead for looking ahead of presenter
+        }
     }
     
     
