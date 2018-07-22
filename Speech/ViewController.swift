@@ -65,6 +65,27 @@ class ViewController : UIViewController, AudioControllerDelegate {
         ViewController.numOfDownloads += 1
         print(pathVar)
         let client = DropboxClientsManager.authorizedClient
+//        client!.files.download(path: pathVar).response { response, error in
+//            if let response = response {
+//                let responseMetadata = response.0
+//                print("RESPONSE METADATA IS: \(responseMetadata)")
+//                let fileContents = response.1
+//                print("FILE CONTENTS IS: \(fileContents)")
+//                let time2 = String(data: fileContents, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue)) as String!
+//                print(time2)
+////                let time = fileContents.stringEncoding(data: Data,
+////                    opts: [StringEncodingDetectionOptionsKey:Any]?,
+////                    string: AutoreleasingUnsafeMutablePointer<NSString?>?,
+////                    usedLossyConversoin: UnsafeMutablePointer<ObjCBol>?)
+//                print ("HERE BE DRAGONS")
+//            } else if let error = error {
+//                print(error)
+//            }
+//        }
+//            .progress {progressData in
+//            print(progressData)
+//        }
+        
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let destURL2 = directoryURL.appendingPathComponent("tempDir")//myTestFile will be the file name
@@ -81,7 +102,10 @@ class ViewController : UIViewController, AudioControllerDelegate {
             if let response = response {
                 print ("response is: \(response)")
                 do {
-                self.match.fakeInit(document: try String(contentsOf: destURL2, encoding: .utf8))
+                    var encoding: String.Encoding = .ascii
+                    //var stringer2 = try String(contentsOf: destURL2, usedEncoding: &encoding)
+                    //print(stringer2)
+                    self.match.fakeInit(document: try String(contentsOf: destURL2, usedEncoding: &encoding))
                 } catch {
                     print ("the error in response is \(error)")
                 }
