@@ -12,7 +12,7 @@ import googleapis
 import SwiftyDropbox
 import Foundation
 
-//let SAMPLE_RATE = 16000
+let SAMPLE_RATE = 16000
 
 class CueCardViewController: UIViewController, AudioControllerDelegate {
     

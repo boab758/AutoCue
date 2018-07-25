@@ -14,28 +14,17 @@
 // limitations under the License.
 //
 import UIKit
-import AVFoundation
-import googleapis
 import SwiftyDropbox
 import Foundation //only needed for Time API
 
-let SAMPLE_RATE = 16000
-
-class ViewController : UIViewController, AudioControllerDelegate {
+class ViewController : UIViewController {
     //MARK: variables
     var audioData: NSMutableData!
     //lazy var match = Match()
     var modelController = ModelController()
-    var index = 0
-    var Card1 = CardView()
-    var Card2 = CardView()
-    var Card3 = CardView()
-    var Card4 = CardView()
     var errorCard = CardView()
     
     var pathVar = ""
-    
-    var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
 
     static var numOfDownloads = 0
     var errorOccured = false
@@ -52,7 +41,8 @@ class ViewController : UIViewController, AudioControllerDelegate {
         print("CHECKING SEGUE")
         if let ident = identifier {
             if ident == "showCueCard" {
-                if shouldSegue || errorOccured{
+                if shouldSegue && !errorOccured{
+                    print("shouldSegue: \(shouldSegue) and errorOccured:\(errorOccured)")
                     print("SEGUE IS A GO")
                     return true
                 }
@@ -85,13 +75,6 @@ class ViewController : UIViewController, AudioControllerDelegate {
     @IBAction func download(_ sender: UIButton) {
         print(pathVar)
         var matchVC = self.modelController.match
-        if ViewController.numOfDownloads > 0 {
-            Card1.removeFromSuperview()
-            Card2.removeFromSuperview()
-            Card3.removeFromSuperview()
-            Card4.removeFromSuperview()
-            ViewController.numOfDownloads = 0
-        }
         if errorOccured {
             errorCard.removeFromSuperview()
             errorOccured = false
@@ -157,97 +140,9 @@ class ViewController : UIViewController, AudioControllerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        AudioController.sharedInstance.delegate = self
-    }
-    
-    //MARK: big start
-    @IBAction func recordAudio(_ sender: UIButton) {
-        //cardInit()
-        startStream()
-        Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(timeController), userInfo: nil, repeats: true)
-    }
-    
-    @objc func timeController() {
-        print("called timecontroller")
-        stopStream()
-        startStream()
-    }
-    
-    private func startStream() {
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(AVAudioSessionCategoryRecord)
-        } catch {
-            
-        }
-        audioData = NSMutableData()
-        _ = AudioController.sharedInstance.prepare(specifiedSampleRate: SAMPLE_RATE)
-        SpeechRecognitionService.sharedInstance.sampleRate = SAMPLE_RATE
-        _ = AudioController.sharedInstance.start()
-    }
-    
-    private func stopStream(){
-        _ = AudioController.sharedInstance.stop()
-        SpeechRecognitionService.sharedInstance.stopStreaming()
-    }
-    
-    @IBAction func stopAudio(_ sender: UIButton) {
-        stopStream()
-    }
-    
-    func processSampleData(_ data: Data) -> Void {
-        var matchVC = modelController.match
-        audioData.append(data)
-        
-        // We recommend sending samples in 100ms chunks
-        let chunkSize : Int /* bytes/chunk */ = Int(0.1 /* seconds/chunk */
-            * Double(SAMPLE_RATE) /* samples/second */
-            * 2 /* bytes/sample */);
-        
-        if (audioData.length > chunkSize) {
-            SpeechRecognitionService.sharedInstance.streamAudioData(audioData,
-                                                                    completion:
-                { [weak self] (response, error) in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    
-                    if let error = error {
-                        print(error.localizedDescription)
-                        print(error.localizedDescription)
-                    } else if let response = response {
-                        for result in response.resultsArray! {
-                            if let result = result as? StreamingRecognitionResult {
-                                if result.isFinal {
-                                    if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
-                                        let presentedText = matchVC.compareStringWithSentences(googleString: result.transcript!)
-//                                        self?.firstString = (presentedText?.current)!
-//                                        self?.secondString = (presentedText?.ahead)!
-//                                        self?.thirdString = (presentedText?.third)!
-//                                        self?.fourthString = (presentedText?.fourth)!
-//                                        print ("DD")
-//                                        self?.index = (presentedText?.idx)!
-//                                        self?.animate()
-//                                        print("FF")
-                                    }
-                                }
-                            }
-                        }
-                    }
-            })
-            self.audioData = NSMutableData()
-        }
     }
     
 
-    
-    
-
-    
-
-    //MARK: animate
-    
-    //}
     
 
     //MARK: small start
@@ -255,33 +150,11 @@ class ViewController : UIViewController, AudioControllerDelegate {
         //ADD BELOW FOR TESTING
         //match.fakeInit(document: "")
         //ADD ABOVE FOR TESTING
-//        var string1 = match.sentences[0]
-//        var string2 = match.sentences[1]
-//        var string3 = match.sentences[2]
-        Card1 = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
-        Card1.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card2 = CardView(frame: CGRect(x:65, y:225, width: 270, height: 130)) //x:400/70y:200/340
-        Card2.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
-        Card3.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 270, height: 130))
-        Card4.backgroundColor = UIColor(white: 1, alpha: 0)
-        //addGestures(Card1: Card1, Card2: Card2)
-        self.view.addSubview(Card1)
-        self.view.addSubview(Card2)
-        self.view.addSubview(Card3)
-        self.view.addSubview(Card4)
-//        print(string1)
-//        Card3.setString(str: string3)
-//        Card2.setString(str: string2)
-//        Card1.setString(str: string1)
     }
-//    @IBAction func test1(_ sender: UIButton) {
-//        index = 0
-//        animate()
-//    }
-//    @IBAction func test2(_ sender: UIButton) {
-//        index = 1
-//        animate()
-//    }
+    @IBAction func test1(_ sender: UIButton) {
+
+    }
+    @IBAction func test2(_ sender: UIButton) {
+
+    }
 }
