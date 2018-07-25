@@ -21,36 +21,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cd-lk-6rs">
-                                <rect key="frame" x="280" y="533" width="69" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbk-NV-VhK">
+                                <rect key="frame" x="110" y="179" width="154" height="99"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Download"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="download:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PZ3-cK-s2e"/>
-                                    <segue destination="eCD-Kw-uvd" kind="show" identifier="showCueCard" id="gtA-bz-pA3"/>
+                                    <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BVO-TF-LLl"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tbS-Yf-0Y9">
-                                <rect key="frame" x="16" y="533" width="253" height="30"/>
+                                <rect key="frame" x="32" y="373" width="315" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="editChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="PkY-M3-XHB"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbk-NV-VhK">
-                                <rect key="frame" x="110" y="179" width="154" height="99"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cd-lk-6rs">
+                                <rect key="frame" x="110" y="459" width="133" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
-                                <state key="normal" title="Login"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Download">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BVO-TF-LLl"/>
+                                    <action selector="download:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PZ3-cK-s2e"/>
+                                    <segue destination="eCD-Kw-uvd" kind="show" identifier="showCueCard" id="gtA-bz-pA3"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="OSl-ZV-S67"/>
                     <connections>
@@ -84,7 +89,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZCc-O0-l4S">
-                                <rect key="frame" x="233" y="530" width="78" height="68"/>
+                                <rect key="frame" x="281" y="530" width="78" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Stop"/>
@@ -113,19 +118,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9oe-0e-Rbz">
-                                <rect key="frame" x="118" y="136" width="134" height="100"/>
+                                <rect key="frame" x="111" y="136" width="149" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="DropBox"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="9Ox-c9-eYD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdE-eZ-Gr4">
-                                <rect key="frame" x="118" y="477" width="134" height="100"/>
+                                <rect key="frame" x="93" y="477" width="185" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="CopyPaste">
+                                    <color key="titleColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="M5T-Vi-zZO" kind="show" id="Y4x-ry-dsj"/>
                                 </connections>
@@ -139,10 +146,10 @@
             </objects>
             <point key="canvasLocation" x="-231.19999999999999" y="261.31934032983509"/>
         </scene>
-        <!--View Controller-->
+        <!--Copy Paste View Controller-->
         <scene sceneID="l5d-LS-xgc">
             <objects>
-                <viewController id="M5T-Vi-zZO" sceneMemberID="viewController">
+                <viewController id="M5T-Vi-zZO" customClass="CopyPasteViewController" customModule="Speech" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ONw-19-UYt"/>
                         <viewControllerLayoutGuide type="bottom" id="4GZ-8s-Pem"/>
@@ -152,14 +159,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XlV-pu-MTR">
-                                <rect key="frame" x="188" y="324" width="132" height="80"/>
+                                <rect key="frame" x="121" y="548" width="132" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Save"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveSpeech:" destination="M5T-Vi-zZO" eventType="touchUpInside" id="g88-uJ-GgN"/>
+                                    <segue destination="eCD-Kw-uvd" kind="show" identifier="showCueCard" id="bj1-JO-8Hx"/>
+                                </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c9r-Ie-9Nm">
+                                <rect key="frame" x="40" y="90" width="289" height="450"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" spellCheckingType="no"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="copyPaste" destination="c9r-Ie-9Nm" id="jMn-NQ-tTU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8h-8D-Um4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -184,4 +207,7 @@
             <point key="canvasLocation" x="-1129" y="262"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bj1-JO-8Hx"/>
+    </inferredMetricsTieBreakers>
 </document>

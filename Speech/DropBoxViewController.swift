@@ -47,7 +47,7 @@ class DropBoxViewController : UIViewController {
     @IBOutlet weak var pathField: UITextField! {
         didSet {
             pathField.placeholder = "Enter path here"
-            pathField.font = UIFont.systemFont(ofSize: 15)
+            pathField.font = UIFont.systemFont(ofSize: 18)
             pathField.borderStyle = UITextBorderStyle.roundedRect
             pathField.autocorrectionType = UITextAutocorrectionType.no
             pathField.keyboardType = UIKeyboardType.default
@@ -109,6 +109,7 @@ class DropBoxViewController : UIViewController {
                     DropBoxViewController.numOfDownloads += 1
                     print("DOWNLOAD FINISH")
                     self.shouldSegue = true
+                    self.modelController.color = "blue"
                     self.performSegue(withIdentifier: "showCueCard", sender: Any?)
                 } catch {
                     self.errorOccured = true

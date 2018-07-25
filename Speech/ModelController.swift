@@ -11,5 +11,6 @@ import Foundation
 class ModelController {
     
     var match = Match()
+    var color = ""
     
 }

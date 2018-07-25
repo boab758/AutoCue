@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D0F1B9320E219F900FA61D8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F1B9220E219F900FA61D8 /* Match.swift */; };
 		2C450CC6320CA9890051ABAF /* Pods_Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B7F558BD8BC89862C8C277 /* Pods_Speech.framework */; };
+		7E7557E72108C74E00BB57FC /* CopyPasteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7557E62108C74E00BB57FC /* CopyPasteViewController.swift */; };
 		7EB9664F2108759800F6F7A5 /* MethodSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB9664E2108759800F6F7A5 /* MethodSelectorViewController.swift */; };
 		7EB96651210875DB00F6F7A5 /* CueCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB96650210875DB00F6F7A5 /* CueCardViewController.swift */; };
 		7EB9665321087A3600F6F7A5 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB9665221087A3600F6F7A5 /* ModelController.swift */; };
@@ -27,6 +28,7 @@
 		54C3D1E96C8C43AB14662311 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E83ACE29B0D0DF0085BA8F2 /* Pods-Speech.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Speech.release.xcconfig"; path = "Pods/Target Support Files/Pods-Speech/Pods-Speech.release.xcconfig"; sourceTree = "<group>"; };
 		6C682F8DD9C94E41979FE816 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7E7557E62108C74E00BB57FC /* CopyPasteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyPasteViewController.swift; sourceTree = "<group>"; };
 		7EB9664E2108759800F6F7A5 /* MethodSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodSelectorViewController.swift; sourceTree = "<group>"; };
 		7EB96650210875DB00F6F7A5 /* CueCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueCardViewController.swift; sourceTree = "<group>"; };
 		7EB9665221087A3600F6F7A5 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				7EB9665221087A3600F6F7A5 /* ModelController.swift */,
+				7E7557E62108C74E00BB57FC /* CopyPasteViewController.swift */,
 				7EB9664E2108759800F6F7A5 /* MethodSelectorViewController.swift */,
 				1D0F1B9220E219F900FA61D8 /* Match.swift */,
 				D3E34EA01D77541D00EF755D /* AppDelegate.swift */,
@@ -259,6 +262,7 @@
 				7EB9664F2108759800F6F7A5 /* MethodSelectorViewController.swift in Sources */,
 				D31E0EBA1D77AA2F006A50AB /* AudioController.swift in Sources */,
 				D31E0EB81D778A56006A50AB /* SpeechRecognitionService.swift in Sources */,
+				7E7557E72108C74E00BB57FC /* CopyPasteViewController.swift in Sources */,
 				7EB9665321087A3600F6F7A5 /* ModelController.swift in Sources */,
 				D3E34EA51D7757CC00EF755D /* DropBoxViewController.swift in Sources */,
 				7EB96651210875DB00F6F7A5 /* CueCardViewController.swift in Sources */,
