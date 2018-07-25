@@ -32,12 +32,10 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     var hasLogin = false
     
     var modelController = ModelController()
-    
+    var initialLoad = true
     var audioData: NSMutableData!
     
-    @IBAction func dismissVC(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
+    //MARK: record
     @IBAction func Stop(_ sender: UIButton) {
         stopStream()
     }
@@ -122,6 +120,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: cardInit
     func cardInit() {
         //ADD BELOW FOR TESTING
         //match.fakeInit(document: "")
@@ -162,7 +161,8 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         Card2.addGestureRecognizer(swipe2)
         Card2.addGestureRecognizer(swipe4)
     }
-
+    
+    //MARK: animation
     var isAni = true
     @objc func standInAnimate() {
         print("FORWARD")

@@ -17,10 +17,9 @@ import UIKit
 import SwiftyDropbox
 import Foundation //only needed for Time API
 
-class ViewController : UIViewController {
+class DropBoxViewController : UIViewController {
     //MARK: variables
     var audioData: NSMutableData!
-    //lazy var match = Match()
     var modelController = ModelController()
     var errorCard = CardView()
     
@@ -32,22 +31,16 @@ class ViewController : UIViewController {
     var shouldSegue = false
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let cueCardViewController = segue.destination as? CueCardViewController {
-            //print(modelController.match.sentences[0])
-            cueCardViewController.modelController = modelController
+        if segue.identifier == "showCueCard" {
+            if let cueCardViewController = segue.destination as? CueCardViewController {
+                //print(modelController.match.sentences[0])
+                cueCardViewController.modelController = modelController
+            }
         }
     }
     override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
         print("CHECKING SEGUE")
-        if let ident = identifier {
-            if ident == "showCueCard" {
-                if shouldSegue && !errorOccured{
-                    print("shouldSegue: \(shouldSegue) and errorOccured:\(errorOccured)")
-                    print("SEGUE IS A GO")
-                    return true
-                }
-            }
-        }
+        print("shouldSegue: \(shouldSegue) and errorOccured:\(errorOccured)")
         return false
     }
     
@@ -113,7 +106,7 @@ class ViewController : UIViewController {
                 do {
                     var encoding: String.Encoding = .ascii
                     matchVC.fakeInit(document: try String(contentsOf: destURL2, usedEncoding: &encoding))
-                    ViewController.numOfDownloads += 1
+                    DropBoxViewController.numOfDownloads += 1
                     print("DOWNLOAD FINISH")
                     self.shouldSegue = true
                     self.performSegue(withIdentifier: "showCueCard", sender: Any?)

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if let viewController = window?.rootViewController as? ViewController {
+        if let viewController = window?.rootViewController as? DropBoxViewController {
             viewController.modelController = ModelController()
         }
         DropboxClientsManager.setupWithAppKey("ygqby722mgz3r9p")

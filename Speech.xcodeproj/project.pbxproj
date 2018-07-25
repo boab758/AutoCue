@@ -19,7 +19,7 @@
 		D34C17DC1C948F5800D69BCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34C17DA1C948F5800D69BCA /* LaunchScreen.storyboard */; };
 		D392D9861C94937D002F5132 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D392D9851C94937D002F5132 /* Main.storyboard */; };
 		D3E34EA11D77541D00EF755D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E34EA01D77541D00EF755D /* AppDelegate.swift */; };
-		D3E34EA51D7757CC00EF755D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E34EA41D7757CC00EF755D /* ViewController.swift */; };
+		D3E34EA51D7757CC00EF755D /* DropBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E34EA41D7757CC00EF755D /* DropBoxViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,7 @@
 		D392D9851C94937D002F5132 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D3E34E9F1D77541C00EF755D /* Speech-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Speech-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3E34EA01D77541D00EF755D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D3E34EA41D7757CC00EF755D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D3E34EA41D7757CC00EF755D /* DropBoxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropBoxViewController.swift; sourceTree = "<group>"; };
 		F3215BCD5D87DFF7F2965B8A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +101,7 @@
 				D3E34E9F1D77541C00EF755D /* Speech-Bridging-Header.h */,
 				D31E0EB71D778A56006A50AB /* SpeechRecognitionService.swift */,
 				D34C17CC1C948F5700D69BCA /* Supporting Files */,
-				D3E34EA41D7757CC00EF755D /* ViewController.swift */,
+				D3E34EA41D7757CC00EF755D /* DropBoxViewController.swift */,
 				7EBC8E5020F10C6100CE688E /* CardView.swift */,
 			);
 			path = Speech;
@@ -260,7 +260,7 @@
 				D31E0EBA1D77AA2F006A50AB /* AudioController.swift in Sources */,
 				D31E0EB81D778A56006A50AB /* SpeechRecognitionService.swift in Sources */,
 				7EB9665321087A3600F6F7A5 /* ModelController.swift in Sources */,
-				D3E34EA51D7757CC00EF755D /* ViewController.swift in Sources */,
+				D3E34EA51D7757CC00EF755D /* DropBoxViewController.swift in Sources */,
 				7EB96651210875DB00F6F7A5 /* CueCardViewController.swift in Sources */,
 				1D0F1B9320E219F900FA61D8 /* Match.swift in Sources */,
 				7EBC8E5120F10C6100CE688E /* CardView.swift in Sources */,
