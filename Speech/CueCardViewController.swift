@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
+import googleapis
+import SwiftyDropbox
+import Foundation
 
-class CueCardViewController: UIViewController {
+//let SAMPLE_RATE = 16000
+
+class CueCardViewController: UIViewController, AudioControllerDelegate {
     
     var firstString = ""
     var secondString = ""
@@ -27,8 +33,86 @@ class CueCardViewController: UIViewController {
     
     var modelController = ModelController()
     
+    var audioData: NSMutableData!
+    
+    @IBAction func dismissVC(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    @IBAction func Stop(_ sender: UIButton) {
+        stopStream()
+    }
+    private func stopStream(){
+        _ = AudioController.sharedInstance.stop()
+        SpeechRecognitionService.sharedInstance.stopStreaming()
+    }
+    @IBAction func Start(_ sender: UIButton) {
+        startStream()
+        Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(timeController), userInfo: nil, repeats: true)
+    }
+    private func startStream() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryRecord)
+        } catch {
+            
+        }
+        audioData = NSMutableData()
+        _ = AudioController.sharedInstance.prepare(specifiedSampleRate: SAMPLE_RATE)
+        SpeechRecognitionService.sharedInstance.sampleRate = SAMPLE_RATE
+        _ = AudioController.sharedInstance.start()
+    }
+    @objc func timeController() {
+        print("called timecontroller")
+        stopStream()
+        startStream()
+    }
+    
+    func processSampleData(_ data: Data) {
+        var matchVC = modelController.match
+        audioData.append(data)
+        
+        // We recommend sending samples in 100ms chunks
+        let chunkSize : Int /* bytes/chunk */ = Int(0.1 /* seconds/chunk */
+            * Double(SAMPLE_RATE) /* samples/second */
+            * 2 /* bytes/sample */);
+        
+        if (audioData.length > chunkSize) {
+            SpeechRecognitionService.sharedInstance.streamAudioData(audioData,
+                                                                    completion:
+                { [weak self] (response, error) in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    
+                    if let error = error {
+                        print(error.localizedDescription)
+                        print(error.localizedDescription)
+                    } else if let response = response {
+                        for result in response.resultsArray! {
+                            if let result = result as? StreamingRecognitionResult {
+                                if result.isFinal {
+                                    if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
+                                        let presentedText = matchVC.compareStringWithSentences(googleString: result.transcript!)
+                                        print ("DD")
+                                        self?.index = (presentedText.idx)
+                                        self?.animate()
+                                        print("FF")
+                                    }
+                                }
+                            }
+                        }
+                    }
+            })
+            self.audioData = NSMutableData()
+        }
+    }
+    
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        AudioController.sharedInstance.delegate = self
         cardInit()
         // Do any additional setup after loading the view.
     }

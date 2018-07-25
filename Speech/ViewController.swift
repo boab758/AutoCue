@@ -26,10 +26,6 @@ class ViewController : UIViewController, AudioControllerDelegate {
     var audioData: NSMutableData!
     //lazy var match = Match()
     var modelController = ModelController()
-    var firstString = ""
-    var secondString = ""
-    var thirdString = ""
-    var fourthString = ""
     var index = 0
     var Card1 = CardView()
     var Card2 = CardView()
@@ -48,14 +44,16 @@ class ViewController : UIViewController, AudioControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cueCardViewController = segue.destination as? CueCardViewController {
-            print(modelController.match.sentences[0])
+            //print(modelController.match.sentences[0])
             cueCardViewController.modelController = modelController
         }
     }
     override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        print("CHECKING SEGUE")
         if let ident = identifier {
             if ident == "showCueCard" {
-                if shouldSegue {
+                if shouldSegue || errorOccured{
+                    print("SEGUE IS A GO")
                     return true
                 }
             }
@@ -133,6 +131,7 @@ class ViewController : UIViewController, AudioControllerDelegate {
                     var encoding: String.Encoding = .ascii
                     matchVC.fakeInit(document: try String(contentsOf: destURL2, usedEncoding: &encoding))
                     ViewController.numOfDownloads += 1
+                    print("DOWNLOAD FINISH")
                     self.shouldSegue = true
                     self.performSegue(withIdentifier: "showCueCard", sender: Any?)
                 } catch {
