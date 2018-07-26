@@ -134,13 +134,13 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         var string1 = match.sentences[0]
         var string2 = match.sentences[1]
         var string3 = match.sentences[2]
-        Card1 = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
+        Card1 = CardView(frame: CGRect(x:65, y:70, width: 290, height: 200)) //x:225/400/70y:200/340width:270height:130
         Card1.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card2 = CardView(frame: CGRect(x:65, y:225, width: 270, height: 130)) //x:400/70y:200/340
+        Card2 = CardView(frame: CGRect(x:65, y:295, width: 290, height: 200)) //x:225/400/70y:200/340
         Card2.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card3 = CardView(frame: CGRect(x:400, y:225, width: 270, height: 130)) //x:400/70y:200/340
+        Card3 = CardView(frame: CGRect(x:400, y:295, width: 290, height: 200)) //x:400/70y:200/340
         Card3.backgroundColor = UIColor(white: 1, alpha: 0)
-        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 270, height: 130))
+        Card4 = CardView(frame: CGRect(x: -280, y: 70, width: 290, height: 200))
         Card4.backgroundColor = UIColor(white: 1, alpha: 0)
         addGestures(Card1: Card1, Card2: Card2)
         self.view.addSubview(Card1)
@@ -210,13 +210,13 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                     withDuration: 0.5,
                     delay: 0,
                     options: UIViewAnimationOptions.curveEaseIn,
-                    animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: 0, y: frame.size.height+20)},
+                    animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: 0, y: frame.size.height+25)},//+20
                     completion: {finished in
                         UIViewPropertyAnimator.runningPropertyAnimator(
                             withDuration: 0.6,
                             delay: 0,
                             options: UIViewAnimationOptions.curveEaseIn,
-                            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width+60, y: 0)},
+                            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width+75, y: 0)},//+60
                             completion: {finished in
                                 if self.index > 0 {
                                     self.Card2.setString(str: match.sentences[self.index+1])
@@ -260,13 +260,13 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                     withDuration: 0.5,
                     delay: 0,
                     options: UIViewAnimationOptions.curveEaseIn,
-                    animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height-20)},
+                    animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height-25)},
                     completion: {finished in
                         UIViewPropertyAnimator.runningPropertyAnimator(
                             withDuration: 0.6,
                             delay: 0,
                             options: UIViewAnimationOptions.curveEaseIn,
-                            animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-65, y: 0)},
+                            animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-45, y: 0)},//-75 -65 -85
                             completion: {finished in
                                 if self.disappearing {
                                     self.Card4.setString(str: self.Card1.getString())

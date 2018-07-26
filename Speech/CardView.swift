@@ -36,7 +36,7 @@ class CardView: UIView {
         super.layoutSubviews()
         configureSpeechLabel(speechLabel)
         let boundsOriginPoint = bounds.origin
-        speechLabel.frame.origin = CGPoint(x: boundsOriginPoint.x+8, y: boundsOriginPoint.y+1)
+        speechLabel.frame.origin = CGPoint(x: boundsOriginPoint.x+2, y: boundsOriginPoint.y+1)
     }
     
     override func draw(_ rect: CGRect) {
