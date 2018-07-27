@@ -167,34 +167,43 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         Card2.addGestureRecognizer(swipe4)
     }
     
-    //MARK: animation
-    var isAni = true
-    @objc func standInAnimate() {
-        print("FORWARD")
-        index += 1
-        print(index)
-        isAni = true
-        print("isAni is \(isAni)")
-        animate()
+    //MARK: animation condition
+    @objc func standInAnimate() { //normal + end      0 to +2
+        if index+2 >= modelController.match.sentences.count {
+            return
+        } else {
+            index += 1
+            print("forward: index is \(index)")
+            animate()
+        }
     }
-    @objc func standInAnimateBack() {
-        print("BACKWARD")
-        if index-1 <= -1 {
-            index = 0
-            if isAni {
-                animateBack()
-            }
+    @objc func standInAnimateBack() { //start + normal + end     -1 to +1
+        if index == 0 {
+            return
+        } else if index+1 == modelController.match.sentences.count {
+            return
         } else {
             index -= 1
-            print(isAni)
-            if index == 0 {
-                isAni = false
-            }
+            print("backward: index is \(index)")
             animateBack()
         }
-        print(index)
+        
+        
+        
+//        if index-1 <= -1 {
+//            index = 0
+//            if isAni {
+//                animateBack()
+//            }
+//        } else {
+//            index -= 1
+//            if index == 0 {
+//                isAni = false
+//            }
+//            animateBack()
+//        }
     }
-    
+    //MARK: animate backward
     func animateBack() {
         var match = self.modelController.match
         let frame = Card1.frame
@@ -218,31 +227,47 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                             options: UIViewAnimationOptions.curveEaseIn,
                             animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width+75, y: 0)},//+60
                             completion: {finished in
-                                if self.index > 0 {
+                                if self.index > 0 && self.index+2 < match.sentences.count{ //in between
+                                    self.Card3.setString(str: match.sentences[self.index+2])
                                     self.Card2.setString(str: match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
-                                    print("CARD2 IS BACK")
                                     self.Card1.setString(str: match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    print("CARD1 IS BACK")
                                     self.Card4.setString(str: match.sentences[self.index-1])
                                     self.Card4.transform = CGAffineTransform.identity
-                                    print("CARD4 IS BACK")
-                                } else {
+                                    print ("Card4: \(match.sentences[self.index-1])")
+                                    print ("Card3: \(match.sentences[self.index+2])")
+                                    print ("Card2: \(match.sentences[self.index+1])")
+                                    print ("Card1: \(match.sentences[self.index])")
+                                } else if self.index == 0 { //start
+                                    self.Card3.setString(str: match.sentences[self.index+2])
                                     self.Card2.setString(str: match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
-                                    print("CARD2 IS BACK")
                                     self.Card1.setString(str: match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    print("CARD4 IS BACK")
                                     self.Card4.setString(str: match.sentences[self.index])
                                     self.Card4.transform = CGAffineTransform.identity
+                                    print ("Card4: \(match.sentences[self.index])")
+                                    print ("Card3: \(match.sentences[self.index+2])")
+                                    print ("Card2: \(match.sentences[self.index+1])")
+                                    print ("Card1: \(match.sentences[self.index])")
+                                } else {
+                                    self.Card3.setString(str: match.sentences[self.index+1])
+                                    self.Card2.setString(str: match.sentences[self.index])
+                                    self.Card2.transform = CGAffineTransform.identity
+                                    self.Card1.setString(str: match.sentences[self.index])
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    self.Card4.setString(str: match.sentences[self.index-1])
+                                    self.Card4.transform = CGAffineTransform.identity
+                                    print ("Card4: \(match.sentences[self.index-1])")
+                                    print ("Card2: \(match.sentences[self.index])")
+                                    print ("Card1: \(match.sentences[self.index])")
                                 }
                         })
                 })
         })
     }
-    
+    //MARK: animate forward
     func animate() {
         var match = self.modelController.match
         let frame = Card1.frame
@@ -268,25 +293,28 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                             options: UIViewAnimationOptions.curveEaseIn,
                             animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-45, y: 0)},//-75 -65 -85
                             completion: {finished in
-                                if self.disappearing {
+                                if self.index+2 < match.sentences.count { //start and in between
                                     self.Card4.setString(str: self.Card1.getString())
                                     self.Card3.setString(str: match.sentences[self.index+2])
                                     self.Card3.transform = CGAffineTransform.identity
-                                    print("CARD3 IS BACK and: \(match.sentences[self.index+2])")
                                     self.Card2.setString(str: match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
-                                    print("CARD2 IS BACK and: \(match.sentences[self.index+1])")
                                     self.Card1.setString(str: match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    print("CARD1 IS BACK and: \(match.sentences[self.index])")
-                                } else if !(self.disappearing) {
+                                    print ("Card3: \(match.sentences[self.index+2])")
+                                    print ("Card2: \(match.sentences[self.index+1])")
+                                    print ("Card1: \(match.sentences[self.index])")
+                                } else { //end //MARK:condition
                                     self.Card4.setString(str: self.Card1.getString())
-                                    self.Card1.setString(str: match.sentences[self.index])
-                                    self.Card1.transform = CGAffineTransform.identity
+                                    self.Card3.setString(str: match.sentences[self.index+1])
+                                    self.Card3.transform = CGAffineTransform.identity
                                     self.Card2.setString(str: match.sentences[self.index+1])
                                     self.Card2.transform = CGAffineTransform.identity
-                                    self.Card3.setString(str: match.sentences[self.index+2])
-                                    self.Card3.transform = CGAffineTransform.identity
+                                    self.Card1.setString(str: match.sentences[self.index])
+                                    self.Card1.transform = CGAffineTransform.identity
+                                    print ("Card3: \(match.sentences[self.index+1])")
+                                    print ("Card2: \(match.sentences[self.index+1])")
+                                    print ("Card1: \(match.sentences[self.index])")
                                 }
                         })
                 })
