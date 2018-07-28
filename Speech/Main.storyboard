@@ -38,6 +38,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccessory" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="editChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="PkY-M3-XHB"/>
                                 </connections>
@@ -212,6 +215,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bj1-JO-8Hx"/>
+        <segue reference="gtA-bz-pA3"/>
     </inferredMetricsTieBreakers>
 </document>
