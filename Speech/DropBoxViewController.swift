@@ -118,8 +118,8 @@ class DropBoxViewController : UIViewController {
                 }
             } else if let error = error {
                 self.errorOccured = true
-                self.errorCardInit(errorParam: (error as! Error) as! String)
-                print (error)
+                self.errorCardInit(errorParam: "Invalid Path")
+                print ("OVERALL ERROR IS \(error)")
             }
             }
             .progress {progressData in print(progressData)
