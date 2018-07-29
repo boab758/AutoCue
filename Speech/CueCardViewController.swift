@@ -210,23 +210,23 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         let frame = Card1.frame
         //if string1 == Card1.getString() {
         UIViewPropertyAnimator.runningPropertyAnimator(
-            withDuration: 0.4,
+            withDuration: 0.2,
             delay: 0,
             options: UIViewAnimationOptions.curveEaseIn,
-            animations: {self.Card4.transform = CGAffineTransform.identity.translatedBy(x: 345, y: 0)},
+            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 295, y: 0)},
             //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
             completion: {finished in
                 UIViewPropertyAnimator.runningPropertyAnimator(
-                    withDuration: 0.5,
+                    withDuration: 0.4,
                     delay: 0,
                     options: UIViewAnimationOptions.curveEaseIn,
                     animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: 0, y: frame.size.height+25)},//+20
                     completion: {finished in
                         UIViewPropertyAnimator.runningPropertyAnimator(
-                            withDuration: 0.6,
+                            withDuration: 0.5,
                             delay: 0,
                             options: UIViewAnimationOptions.curveEaseIn,
-                            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width+75, y: 0)},//+60
+                            animations: {self.Card4.transform = CGAffineTransform.identity.translatedBy(x: frame.size.width+75, y: 0)},//+60
                             completion: {finished in
                                 if self.index > 0 && self.index+2 < match.sentences.count{ //in between
                                     self.Card3.setString(str: match.sentences[self.index+2])
@@ -276,20 +276,20 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         //ABOVE
         //if string1 == Card1.getString() {
         UIViewPropertyAnimator.runningPropertyAnimator(
-            withDuration: 0.4,
+            withDuration: 0.2,
             delay: 0,
             options: UIViewAnimationOptions.curveEaseIn,
             animations: {self.Card1.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-70, y: 0)},
             //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
             completion: {finished in
                 UIViewPropertyAnimator.runningPropertyAnimator(
-                    withDuration: 0.5,
+                    withDuration: 0.4,
                     delay: 0,
                     options: UIViewAnimationOptions.curveEaseIn,
                     animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -frame.size.height-25)},
                     completion: {finished in
                         UIViewPropertyAnimator.runningPropertyAnimator(
-                            withDuration: 0.6,
+                            withDuration: 0.5,
                             delay: 0,
                             options: UIViewAnimationOptions.curveEaseIn,
                             animations: {self.Card3.transform = CGAffineTransform.identity.translatedBy(x: -frame.size.width-45, y: 0)},//-75 -65 -85
