@@ -20,7 +20,7 @@ class Match
     //myMagicNumbers
     private var min = 0
     private var range = 2
-    private var mergeThreshold = 10
+    private var mergeThreshold = 30 //in characters
     
     
     //assumes non-empty array and only 1 maximum value, could be 2 though
@@ -30,13 +30,13 @@ class Match
     
     //need to check range limits when range is provided for efficient searching
     func compareStringWithSentences(googleString spokenString:String) -> Int {
+        
         var allPercentages = [Double]()
         for index in min..<(min+range) {
             allPercentages.append(matchPercentage(testString: spokenString.components(separatedBy: CharacterSet.whitespaces), matchAgainstIndex: index))
         }
         let probabilityIndex = highestProbabilityStringIndex(probabilityArray: allPercentages)
         min += probabilityIndex
-//        return stringForViewController(index: min)
         return min
     }
     

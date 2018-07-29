@@ -78,7 +78,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         audioData.append(data)
         
         // We recommend sending samples in 100ms chunks
-        let chunkSize : Int /* bytes/chunk */ = Int(0.1 /* seconds/chunk */
+        let chunkSize : Int /* bytes/chunk */ = Int(0.001 /* seconds/chunk */
             * Double(SAMPLE_RATE) /* samples/second */
             * 2 /* bytes/sample */);
         
@@ -96,25 +96,49 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                     } else if let response = response {
                         for result in response.resultsArray! {
                             if let result = result as? StreamingRecognitionResult {
-//                                print(result)
-//                                if result.isFinal {
-                                    if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
-                                        let presentedTextIndex = matchVC.compareStringWithSentences(googleString: result.transcript!)
-//                                        print ("DD")
-                                    
-                                        if self?.index != presentedTextIndex {
-                                            self?.index = presentedTextIndex
+                                if result.stability > 0.5 {
+                                    print(result)
+    //                                if result.isFinal {
+                                        if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
+                                            if (self?.findWordCount(result.transcript!))! > 2 {
+                                            let presentedTextIndex = matchVC.compareStringWithSentences(googleString: (self?.takeLastHalfOfString(result.transcript!))!)
+    //                                        print ("DD")
+                                        
+                                            if self?.index != presentedTextIndex {
+                                                self?.index = presentedTextIndex
+                                            }
+    //                                        self?.animate()
+    //                                        print("FF")
                                         }
-//                                        self?.animate()
-//                                        print("FF")
-                                    }
-//                                }
+                                        }
+    //                                }
+                                }
                             }
                         }
                     }
             })
             self.audioData = NSMutableData()
         }
+    }
+    
+    func takeLastHalfOfString(_ str:String) -> String {
+        let array = str.split(separator: " ")
+        let length = array.count
+        if length < 6 {
+            return str
+        }
+        var newString = ""
+        for index in array.indices {
+            if index > (length / 2) {
+                newString = newString + " " + array[index]
+            }
+        }
+        return newString
+    }
+    
+    func findWordCount(_ str:String) -> Int {
+        let array = str.split(separator: " ")
+        return array.count
     }
     
     
