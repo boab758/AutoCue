@@ -24,7 +24,12 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     var Card2 = CardView()
     var Card3 = CardView()
     var Card4 = CardView()
-    var index = 0
+    var index = 0 {
+        didSet {
+            print(self.index)
+            animate()
+        }
+    }
     var pathVar = ""
     var disappearing: Bool = true //CHANGE IF CARDS ARE DISAPPEARING THEN APPEARING
     static var numOfDownloads = 0
@@ -91,15 +96,19 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                     } else if let response = response {
                         for result in response.resultsArray! {
                             if let result = result as? StreamingRecognitionResult {
-                                if result.isFinal {
+//                                print(result)
+//                                if result.isFinal {
                                     if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
-                                        let presentedText = matchVC.compareStringWithSentences(googleString: result.transcript!)
-                                        print ("DD")
-                                        self?.index = (presentedText.idx)
-                                        self?.animate()
-                                        print("FF")
+                                        let presentedTextIndex = matchVC.compareStringWithSentences(googleString: result.transcript!)
+//                                        print ("DD")
+                                    
+                                        if self?.index != presentedTextIndex {
+                                            self?.index = presentedTextIndex
+                                        }
+//                                        self?.animate()
+//                                        print("FF")
                                     }
-                                }
+//                                }
                             }
                         }
                     }
@@ -177,7 +186,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
             return
         } else {
             index += 1
-            print("forward: index is \(index)")
+//            print("forward: index is \(index)")
             animate()
         }
     }
@@ -188,7 +197,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
             return
         } else {
             index -= 1
-            print("backward: index is \(index)")
+//            print("backward: index is \(index)")
             animateBack()
         }
         
@@ -239,10 +248,10 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                                     self.Card1.transform = CGAffineTransform.identity
                                     self.Card4.setString(str: match.sentences[self.index-1])
                                     self.Card4.transform = CGAffineTransform.identity
-                                    print ("Card4: \(match.sentences[self.index-1])")
-                                    print ("Card3: \(match.sentences[self.index+2])")
-                                    print ("Card2: \(match.sentences[self.index+1])")
-                                    print ("Card1: \(match.sentences[self.index])")
+//                                    print ("Card4: \(match.sentences[self.index-1])")
+//                                    print ("Card3: \(match.sentences[self.index+2])")
+//                                    print ("Card2: \(match.sentences[self.index+1])")
+//                                    print ("Card1: \(match.sentences[self.index])")
                                 } else if self.index == 0 { //start
                                     self.Card3.setString(str: match.sentences[self.index+2])
                                     self.Card2.setString(str: match.sentences[self.index+1])
@@ -251,10 +260,10 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                                     self.Card1.transform = CGAffineTransform.identity
                                     self.Card4.setString(str: match.sentences[self.index])
                                     self.Card4.transform = CGAffineTransform.identity
-                                    print ("Card4: \(match.sentences[self.index])")
-                                    print ("Card3: \(match.sentences[self.index+2])")
-                                    print ("Card2: \(match.sentences[self.index+1])")
-                                    print ("Card1: \(match.sentences[self.index])")
+//                                    print ("Card4: \(match.sentences[self.index])")
+//                                    print ("Card3: \(match.sentences[self.index+2])")
+//                                    print ("Card2: \(match.sentences[self.index+1])")
+//                                    print ("Card1: \(match.sentences[self.index])")
                                 } else {
                                     self.Card3.setString(str: match.sentences[self.index+1])
                                     self.Card2.setString(str: match.sentences[self.index])
@@ -263,9 +272,9 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                                     self.Card1.transform = CGAffineTransform.identity
                                     self.Card4.setString(str: match.sentences[self.index-1])
                                     self.Card4.transform = CGAffineTransform.identity
-                                    print ("Card4: \(match.sentences[self.index-1])")
-                                    print ("Card2: \(match.sentences[self.index])")
-                                    print ("Card1: \(match.sentences[self.index])")
+//                                    print ("Card4: \(match.sentences[self.index-1])")
+//                                    print ("Card2: \(match.sentences[self.index])")
+//                                    print ("Card1: \(match.sentences[self.index])")
                                 }
                         })
                 })
@@ -305,9 +314,9 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                                     self.Card2.transform = CGAffineTransform.identity
                                     self.Card1.setString(str: match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    print ("Card3: \(match.sentences[self.index+2])")
-                                    print ("Card2: \(match.sentences[self.index+1])")
-                                    print ("Card1: \(match.sentences[self.index])")
+//                                    print ("Card3: \(match.sentences[self.index+2])")
+//                                    print ("Card2: \(match.sentences[self.index+1])")
+//                                    print ("Card1: \(match.sentences[self.index])")
                                 } else { //end //MARK:condition
                                     self.Card4.setString(str: self.Card1.getString())
                                     self.Card3.setString(str: match.sentences[self.index+1])
@@ -316,9 +325,9 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                                     self.Card2.transform = CGAffineTransform.identity
                                     self.Card1.setString(str: match.sentences[self.index])
                                     self.Card1.transform = CGAffineTransform.identity
-                                    print ("Card3: \(match.sentences[self.index+1])")
-                                    print ("Card2: \(match.sentences[self.index+1])")
-                                    print ("Card1: \(match.sentences[self.index])")
+//                                    print ("Card3: \(match.sentences[self.index+1])")
+//                                    print ("Card2: \(match.sentences[self.index+1])")
+//                                    print ("Card1: \(match.sentences[self.index])")
                                 }
                         })
                 })

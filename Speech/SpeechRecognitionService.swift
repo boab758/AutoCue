@@ -16,7 +16,7 @@
 import Foundation
 import googleapis
 
-let API_KEY : String = "AIzaSyBIbLvKcE0-vuRBj2kalFrlngGcqaJ4SZ8"
+let API_KEY : String = "AIzaSyCWR_ILnsRgrcu4ypRzliLYmbjsqSBMmV0"
 let HOST = "speech.googleapis.com"
 
 typealias SpeechRecognitionCompletionHandler = (StreamingRecognizeResponse?, NSError?) -> (Void)
@@ -58,8 +58,8 @@ class SpeechRecognitionService {
       recognitionConfig.encoding =  .linear16
       recognitionConfig.sampleRateHertz = Int32(sampleRate)
       recognitionConfig.languageCode = "en-US"
-      recognitionConfig.maxAlternatives = 30
-      recognitionConfig.enableWordTimeOffsets = true
+      recognitionConfig.maxAlternatives = 1
+      recognitionConfig.enableWordTimeOffsets = false
 
       let streamingRecognitionConfig = StreamingRecognitionConfig()
       streamingRecognitionConfig.config = recognitionConfig
@@ -88,7 +88,6 @@ class SpeechRecognitionService {
 
   func isStreaming() -> Bool {
     return streaming
-//    return true
   }
 
 }
