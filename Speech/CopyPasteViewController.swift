@@ -12,7 +12,7 @@ import Foundation
 class CopyPasteViewController: UIViewController {
 
     var modelController = ModelController()
-    var errorCard = CardView()
+    var errorCard = CardView(isError: true, frame: CGRect(x:45, y:650, width: 270, height: 70))
     var errorOcc = false
     
     override func viewDidLoad() {
@@ -35,8 +35,9 @@ class CopyPasteViewController: UIViewController {
             errorOcc = false
         }
         if copyPaste.text == nil || copyPaste.text == "" {
-            errorCard = CardView(frame: CGRect(x:45, y:650, width: 270, height: 70)) //x:400/70y:200/340
-            errorCard.backgroundColor = UIColor.red
+            //errorCard = CardView(frame: CGRect(x:45, y:650, width: 270, height: 70)) //x:400/70y:200/340
+            //errorCard.backgroundColor = UIColor.red
+            errorCard.backgroundColor = UIColor(white: 1, alpha: 0) //sets the square background of the view to be white but the alpha is 0 so it is transparent. So the result is just the rounded rect. 
             errorCard.setString(str: "Where is your speech?")
             self.view.addSubview(errorCard)
             errorOcc = true

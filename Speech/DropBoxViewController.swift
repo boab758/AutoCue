@@ -21,7 +21,7 @@ class DropBoxViewController : UIViewController {
     //MARK: variables
     var audioData: NSMutableData!
     var modelController = ModelController()
-    var errorCard = CardView()
+    var errorCard = CardView(isError: true, frame: CGRect(x:65, y:70, width: 270, height: 130))
     
     var pathVar = ""
 
@@ -127,8 +127,9 @@ class DropBoxViewController : UIViewController {
     }
     
     func errorCardInit(errorParam: String) {
-        self.errorCard = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
-        self.errorCard.backgroundColor = UIColor.red
+        //self.errorCard = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
+        //self.errorCard.backgroundColor = UIColor.red
+        self.errorCard.backgroundColor = UIColor(white: 1, alpha: 0)
         self.errorCard.setString(str: errorParam)
         self.view.addSubview(self.errorCard)
     }

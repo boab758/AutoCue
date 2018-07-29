@@ -12,6 +12,7 @@ class CardView: UIView {
 
     private(set) var speechText: String = "" { didSet { setNeedsDisplay(); setNeedsLayout() } }
     private lazy var speechLabel = self.createLabel()
+    private var isErrorCard = false
     
     func setString (str: String) {
         speechText = str
@@ -41,8 +42,30 @@ class CardView: UIView {
     
     override func draw(_ rect: CGRect) {
         let roundedRect = UIBezierPath.init(roundedRect: bounds, cornerRadius: 16.0)
-        UIColor.white.setFill()
+        if isErrorCard {
+            UIColor.red.setFill()
+        } else {
+            UIColor.white.setFill()
+        }
+//        self.backgroundColor = UIColor.black.withAlphaComponent(0)
+//        self.isOpaque = false
         roundedRect.fill()
     }
-
+    required init? (coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupView()
+    }
+    override init (frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    convenience init (isError: Bool, frame: CGRect) {
+        self.init(frame: frame)
+        self.isErrorCard = isError
+        setupView()
+    }
+    private func setupView() {
+        setNeedsLayout()
+    }
+    
 }

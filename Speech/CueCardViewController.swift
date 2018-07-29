@@ -136,6 +136,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         var string3 = match.sentences[2]
         Card1 = CardView(frame: CGRect(x:65, y:70, width: 290, height: 200)) //x:225/400/70y:200/340width:270height:130
         Card1.backgroundColor = UIColor(white: 1, alpha: 0)
+        //Card1.backgroundColor = UIColor.white
         Card2 = CardView(frame: CGRect(x:65, y:295, width: 290, height: 200)) //x:225/400/70y:200/340
         Card2.backgroundColor = UIColor(white: 1, alpha: 0)
         Card3 = CardView(frame: CGRect(x:400, y:295, width: 290, height: 200)) //x:400/70y:200/340
