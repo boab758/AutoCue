@@ -35,6 +35,8 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     var initialLoad = true
     var audioData: NSMutableData!
     
+    var time: Timer?
+    
     //MARK: record
     @IBAction func Stop(_ sender: UIButton) {
         stopStream()
@@ -42,10 +44,11 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     private func stopStream(){
         _ = AudioController.sharedInstance.stop()
         SpeechRecognitionService.sharedInstance.stopStreaming()
+        time?.invalidate()
     }
     @IBAction func Start(_ sender: UIButton) {
         startStream()
-        Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(timeController), userInfo: nil, repeats: true)
+        time = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(timeController), userInfo: nil, repeats: true)
     }
     private func startStream() {
         let audioSession = AVAudioSession.sharedInstance()
