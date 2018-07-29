@@ -12,16 +12,43 @@ class MethodSelectorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBOutlet weak var dropbox: UIButton! {
+        didSet {
+            dropbox.setTitle("DropBox", for: UIControlState.normal)
+            dropbox.setImage(resizeImage(image: UIImage(named:"Dropbox_Icon")!, newWidth: 100), for: UIControlState.normal)
+            dropbox.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0)
+            dropbox.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        }
+    }
+    
+    @IBOutlet weak var copypaste: UIButton! {
+        didSet {
+            copypaste.setTitle("CopyPaste", for: UIControlState.normal)
+            copypaste.setImage(resizeImage(image: UIImage(named:"copyPaste")!, newWidth: 100), for: UIControlState.normal)
+            copypaste.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0)
+            copypaste.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        }
+    }
+    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage? {
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width:newWidth, height: newHeight))
+        image.draw(in: CGRect(x:0,y:0,width:newWidth,height:newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
     /*
     // MARK: - Navigation
 
