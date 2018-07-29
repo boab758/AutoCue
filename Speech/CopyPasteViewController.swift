@@ -12,7 +12,7 @@ import Foundation
 class CopyPasteViewController: UIViewController {
 
     var modelController = ModelController()
-    var errorCard = CardView(isError: true, frame: CGRect(x:45, y:650, width: 270, height: 70))
+    var errorCard = CardView(isError: true, frame: CGRect(x:55, y:610, width: 270, height: 70))
     var errorOcc = false
     
     override func viewDidLoad() {

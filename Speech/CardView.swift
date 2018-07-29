@@ -30,6 +30,10 @@ class CardView: UIView {
     
     private func configureSpeechLabel(_ label: UILabel) {
         label.text = speechText
+        if isErrorCard {
+            label.textColor = UIColor.white
+            label.textAlignment = .center
+        }
         label.frame.size = bounds.size
     }
     
