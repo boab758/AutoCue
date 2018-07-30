@@ -27,6 +27,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     var index = 0 {
         didSet {
             print(self.index)
+            modelController.match.min = self.index
             animate()
         }
     }
@@ -74,7 +75,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     }
     
     func processSampleData(_ data: Data) {
-        var matchVC = modelController.match
+        let matchVC = modelController.match
         audioData.append(data)
         
         // We recommend sending samples in 100ms chunks
@@ -96,12 +97,10 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                     } else if let response = response {
                         for result in response.resultsArray! {
                             if let result = result as? StreamingRecognitionResult {
-                                if result.stability > 0.5 {
-                                    print(result)
-    //                                if result.isFinal {
+                                if result.stability > 0.5 { // provided returned string is stable
+//                                    print(result)
                                         if let result = result.alternativesArray[0] as? SpeechRecognitionAlternative {
-                                            if (self?.findWordCount(result.transcript!))! > 2 {
-                                            let presentedTextIndex = matchVC.compareStringWithSentences(googleString: (self?.takeLastHalfOfString(result.transcript!))!)
+                                            let presentedTextIndex = matchVC.compareStringWithSentences(googleString: result.transcript!)
     //                                        print ("DD")
                                         
                                             if self?.index != presentedTextIndex {
@@ -110,8 +109,6 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     //                                        self?.animate()
     //                                        print("FF")
                                         }
-                                        }
-    //                                }
                                 }
                             }
                         }
@@ -121,25 +118,6 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         }
     }
     
-    func takeLastHalfOfString(_ str:String) -> String {
-        let array = str.split(separator: " ")
-        let length = array.count
-        if length < 6 {
-            return str
-        }
-        var newString = ""
-        for index in array.indices {
-            if index > (length / 2) {
-                newString = newString + " " + array[index]
-            }
-        }
-        return newString
-    }
-    
-    func findWordCount(_ str:String) -> Int {
-        let array = str.split(separator: " ")
-        return array.count
-    }
     
     
 
