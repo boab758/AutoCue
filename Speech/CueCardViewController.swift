@@ -26,9 +26,10 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     var Card4 = CardView()
     var index = 0 {
         didSet {
-            print(self.index)
+            if !((modelController.match.sentences.count - 1) == self.index) { 
             modelController.match.min = self.index
             animate()
+            }
         }
     }
     var pathVar = ""
@@ -51,6 +52,10 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         _ = AudioController.sharedInstance.stop()
         SpeechRecognitionService.sharedInstance.stopStreaming()
         time?.invalidate()
+    }
+    @IBAction func restart(_ sender: UIButton) {
+        index = 0
+        stopStream()
     }
     @IBAction func Start(_ sender: UIButton) {
         startStream()

@@ -18,44 +18,40 @@ class Match
     var min = 0
     private var lowMergeThreshold = 10 // in words
     
-    
-    //assumes non-empty array and only 1 maximum value, could be 2 though
     private func highestProbabilityStringIndex(probabilityArray:[Double]) -> Int {
         print(probabilityArray)
+        if probabilityArray[1] > (0.95 * probabilityArray[0]) {
+            return 1
+        }
         return probabilityArray.index(of: probabilityArray.max()!)!
     }
     
     //need to check range limits when range is provided for efficient searching
     func compareStringWithSentences(googleString givenString:String) -> Int {
-        print(givenString)
-        if givenString.wordCount() < 5 {
+        
+        if givenString.wordCount() < 7 {
+            print(givenString)
             return min
         }
+        let spokenString:String
         if givenString.wordCount() > lowMergeThreshold {
-            let spokenString = takeLastPartOfString(givenString)
-            var allPercentages = [Double]()
-            for index in min...(min+1) {
-                if index >= (sentences.count - 1) {
-                    break
-                }
-                allPercentages.append(matchPercentage(testString: spokenString.tokenize(), matchAgainstIndex: index))
-            }
-            let probabilityIndex = highestProbabilityStringIndex(probabilityArray: allPercentages)
-            min += probabilityIndex
-            return min
+            spokenString = takeLastPartOfString(givenString)
         } else {
-            let spokenString = givenString
-            var allPercentages = [Double]()
-            for index in min...(min+1) {
-                if index >= (sentences.count - 1) {
-                    break
-                }
-                allPercentages.append(matchPercentage(testString: spokenString.tokenize(), matchAgainstIndex: index))
-            }
-            let probabilityIndex = highestProbabilityStringIndex(probabilityArray: allPercentages)
-            min += probabilityIndex
-            return min
+            spokenString = givenString
         }
+        print(spokenString)
+        var allPercentages = [Double]()
+        for index in min...(min+1) {
+            print("index = \(index), sentence.count = \(sentences.count)")
+            if index == (sentences.count) {
+                print("called")
+                allPercentages.append(0.0)
+            }
+            allPercentages.append(matchPercentage(testString: spokenString.tokenize(), matchAgainstIndex: index))
+        }
+        let probabilityIndex = highestProbabilityStringIndex(probabilityArray: allPercentages)
+        min += probabilityIndex
+        return min
     }
     
     private func matchPercentage(testString someString:[String], matchAgainstIndex index:Int) -> Double {
@@ -92,13 +88,13 @@ class Match
             if lastIndex != 0 {
                 sentenceTokens[lastIndex - 1] = sentenceTokens[lastIndex - 1] + sentenceTokens.remove(at: lastIndex)
             }
-            print(sentenceTokens)
-            print(sentenceTokens.filter({$0.wordCount() < lowMergeThreshold}).count)
             
         } while (sentenceTokens.filter({$0.wordCount() < lowMergeThreshold}).count > 0)
         
         sentenceTokens.append("END OF SPEECH")
         sentences = sentenceTokens
+        
+        print(sentences)
         
         for index in sentences.indices {
             sentencesWordCount[index] = sentences[index].wordCount()

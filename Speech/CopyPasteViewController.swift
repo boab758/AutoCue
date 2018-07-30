@@ -42,7 +42,7 @@ class CopyPasteViewController: UIViewController {
             self.view.addSubview(errorCard)
             errorOcc = true
         } else {
-            matchVC.fakeInit(document: copyPaste.text)
+            matchVC.fakeInit(document: String(copyPaste.text)) //escape any injection attacks
             modelController.color = "orange"
             self.performSegue(withIdentifier: "showCueCard", sender: Any?)
         }
