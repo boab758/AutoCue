@@ -28,7 +28,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         didSet {
             if !((modelController.match.sentences.count - 1) == self.index) { 
             modelController.match.min = self.index
-            animate()
+//            animate()
             }
         }
     }
@@ -68,6 +68,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     }
     @IBAction func restart(_ sender: UIButton) {
         index = 0
+        animateBack()
         if running {
             stopStream()
         }
@@ -126,6 +127,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
                                         
                                             if self?.index != presentedTextIndex {
                                                 self?.index = presentedTextIndex
+                                                self?.animate()
                                             }
     //                                        self?.animate()
     //                                        print("FF")
@@ -250,7 +252,7 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
             withDuration: 0.2,
             delay: 0,
             options: UIViewAnimationOptions.curveEaseIn,
-            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 295, y: 0)},
+            animations: {self.Card2.transform = CGAffineTransform.identity.translatedBy(x: 330, y: 0)},
             //animations: {self.Card1.frame = CGRect(x:-self.Card1.frame.origin.x, y:0, width:self.Card1.frame.size.width, height:self.Card1.frame.size.height)},
             completion: {finished in
                 UIViewPropertyAnimator.runningPropertyAnimator(
