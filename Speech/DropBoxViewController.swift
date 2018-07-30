@@ -62,8 +62,15 @@ class DropBoxViewController : UIViewController {
         pathVar = pathField.text!
     }
     
+    @IBOutlet var buttons: [UIButton]!{
+        didSet {
+            buttons.forEach({
+                $0.layer.cornerRadius = 16.0
+            })
+        }
+    }
     @IBAction func login(_ sender: UIButton) {
-        DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
+         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
         hasLogin = true
         
     }
@@ -148,6 +155,7 @@ class DropBoxViewController : UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "blue")!)
     }
     
 

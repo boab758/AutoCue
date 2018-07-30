@@ -41,12 +41,25 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     var modelController = ModelController()
     var initialLoad = true
     var audioData: NSMutableData!
+    var running = false
     
     var time: Timer?
     
+    @IBOutlet var buttons: [UIButton]! {
+        didSet {
+        buttons.forEach({
+            $0.layer.cornerRadius = 16.0
+            
+        })
+        }
+    }
+    
+    
     //MARK: record
     @IBAction func Stop(_ sender: UIButton) {
-        stopStream()
+        if running {
+            stopStream()
+        }
     }
     private func stopStream(){
         _ = AudioController.sharedInstance.stop()
@@ -55,10 +68,13 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
     }
     @IBAction func restart(_ sender: UIButton) {
         index = 0
-        stopStream()
+        if running {
+            stopStream()
+        }
     }
     @IBAction func Start(_ sender: UIButton) {
         startStream()
+        running = true
         time = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(timeController), userInfo: nil, repeats: true)
     }
     private func startStream() {

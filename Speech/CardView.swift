@@ -49,7 +49,7 @@ class CardView: UIView {
         if isErrorCard {
             UIColor.red.setFill()
         } else {
-            UIColor.white.setFill()
+            UIColor.white.withAlphaComponent(0.65).setFill()
         }
 //        self.backgroundColor = UIColor.black.withAlphaComponent(0)
 //        self.isOpaque = false

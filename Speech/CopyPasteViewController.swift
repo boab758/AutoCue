@@ -11,17 +11,13 @@ import Foundation
 import PopupDialog
 
 class CopyPasteViewController: UIViewController {
-    
-    
-    
-    
-
     var modelController = ModelController()
     var errorCard = CardView(isError: true, frame: CGRect(x:55, y:610, width: 270, height: 70))
     var errorOcc = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "orange")!)
         // Do any additional setup after loading the view.
     }
     
@@ -35,6 +31,11 @@ class CopyPasteViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var button: UIButton! {
+        didSet {
+            button.layer.cornerRadius = 16.0
+        }
+    }
     
     @IBAction func saveSpeech(_ sender: UIButton) {
         var matchVC = self.modelController.match

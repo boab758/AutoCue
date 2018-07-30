@@ -12,7 +12,7 @@ class MethodSelectorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "combinedcolors")!)
         // Do any additional setup after loading the view.
     }
 
@@ -28,6 +28,7 @@ class MethodSelectorViewController: UIViewController {
             dropbox.setImage(resizeImage(image: UIImage(named:"Dropbox_Icon")!, newWidth: 100), for: UIControlState.normal)
             dropbox.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0)
             dropbox.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+            dropbox.layer.cornerRadius = 10.0
         }
     }
     
@@ -37,6 +38,7 @@ class MethodSelectorViewController: UIViewController {
             copypaste.setImage(resizeImage(image: UIImage(named:"copyPaste")!, newWidth: 100), for: UIControlState.normal)
             copypaste.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0)
             copypaste.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+            copypaste.layer.cornerRadius = 10.0
         }
     }
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage? {
