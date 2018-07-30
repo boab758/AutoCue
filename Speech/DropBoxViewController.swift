@@ -78,7 +78,7 @@ class DropBoxViewController : UIViewController {
             print("1")
         }
         if !hasLogin {
-            let popup = PopupDialog(title: "OOPS!", message: "Have you logged in successfully? Try again after logging in.", image: UIImage(named: ",pexels-photo-103290"))
+            let popup = PopupDialog(title: "OOPS!", message: "Have you logged in successfully? Try again after logging in.", image: UIImage(named: "error"))
             popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
             self.present(popup, animated: true, completion: nil)
             errorOccured = true
@@ -87,7 +87,7 @@ class DropBoxViewController : UIViewController {
         }
         if pathVar.prefix(1) != "/" {
             print(pathVar.prefix(0))
-            let popup = PopupDialog(title: "OOPS!", message: "Please preface path with \"/\"", image: UIImage(named: ",pexels-photo-103290"))
+            let popup = PopupDialog(title: "OOPS!", message: "Please preface path with \"/\"", image: UIImage(named: "error"))
             popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
             self.present(popup, animated: true, completion: nil)
             errorOccured = true
@@ -95,7 +95,7 @@ class DropBoxViewController : UIViewController {
             return
         }
         if pathVar.suffix(4) != ".txt" {
-            let popup = PopupDialog(title: "OOPS!", message: "We only accept txt files at the moment.", image: UIImage(named: ",pexels-photo-103290"))
+            let popup = PopupDialog(title: "OOPS!", message: "We only accept txt files at the moment.", image: UIImage(named: "error"))
             popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
             self.present(popup, animated: true, completion: nil)
             errorOccured = true
@@ -127,7 +127,7 @@ class DropBoxViewController : UIViewController {
                     print ("the error in response is \(error)")
                 }
             } else if let error = error {
-                let popup = PopupDialog(title: "OOPS!", message: "File not found", image: UIImage(named: "pexels-photo-103290"))
+                let popup = PopupDialog(title: "OOPS!", message: "File not found", image: UIImage(named: "error"))
                 popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
                 self.present(popup, animated: true, completion: nil)
                 self.errorOccured = true

@@ -132,10 +132,12 @@ class CueCardViewController: UIViewController, AudioControllerDelegate {
         AudioController.sharedInstance.delegate = self
         cardInit()
         if modelController.color == "blue" {
-            view.backgroundColor = .blue
+            view.backgroundColor = UIColor(patternImage: UIImage(named: "blue")!)
         } else if modelController.color == "orange" {
-            view.backgroundColor = .orange
-        } 
+            view.backgroundColor = UIColor(patternImage: UIImage(named: "orange")!)
+        } else {
+            view.backgroundColor = .white
+        }
         // Do any additional setup after loading the view.
     }
 

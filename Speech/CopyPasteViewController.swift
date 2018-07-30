@@ -22,7 +22,6 @@ class CopyPasteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
@@ -30,7 +29,11 @@ class CopyPasteViewController: UIViewController {
         return false
     }
 
-    @IBOutlet weak var copyPaste: UITextView!
+    @IBOutlet weak var copyPaste: UITextView! {
+        didSet {
+            copyPaste.layer.cornerRadius = 10.0
+        }
+    }
     
     
     @IBAction func saveSpeech(_ sender: UIButton) {
@@ -42,12 +45,12 @@ class CopyPasteViewController: UIViewController {
         if copyPaste.text == nil || copyPaste.text == "" {
             
             // Create the dialog
-            let popup = PopupDialog(title: "OOPS!", message: "This field cannot be empty", image: UIImage(named: "pexels-photo-103290"))
+            let popup = PopupDialog(title: "OOPS!", message: "This field cannot be empty", image: UIImage(named: "error"))
             popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
             self.present(popup, animated: true, completion: nil)
             errorOcc = true
         } else if copyPaste.text.wordCount() < Match.threshold {
-            let popup = PopupDialog(title: "OOPS!", message: "Text has to be minimum 40 words long", image: UIImage(named: "pexels-photo-103290"))
+            let popup = PopupDialog(title: "OOPS!", message: "Text has to be minimum 40 words long", image: UIImage(named: "error"))
             popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
             self.present(popup, animated: true, completion: nil)
             errorOcc = true
