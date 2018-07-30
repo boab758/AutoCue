@@ -1,6 +1,6 @@
-**Milestone 3**
+# Milestone 3
 
-*Please refer to branch "latency" for the latest version.*
+***Please refer to branch "latency" for the latest version.***
 
 Samuel and Stephen
  
