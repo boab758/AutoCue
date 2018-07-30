@@ -16,7 +16,8 @@ class Match
     
     //myMagicNumbers
     var min = 0
-    private var lowMergeThreshold = 10 // in words
+    static let threshold = 40
+    private var lowMergeThreshold = (Match.threshold / 4) // in words
     
     private func highestProbabilityStringIndex(probabilityArray:[Double]) -> Int {
         print(probabilityArray)

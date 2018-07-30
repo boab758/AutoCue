@@ -8,8 +8,13 @@
 
 import UIKit
 import Foundation
+import PopupDialog
 
 class CopyPasteViewController: UIViewController {
+    
+    
+    
+    
 
     var modelController = ModelController()
     var errorCard = CardView(isError: true, frame: CGRect(x:55, y:610, width: 270, height: 70))
@@ -35,11 +40,16 @@ class CopyPasteViewController: UIViewController {
             errorOcc = false
         }
         if copyPaste.text == nil || copyPaste.text == "" {
-            //errorCard = CardView(frame: CGRect(x:45, y:650, width: 270, height: 70)) //x:400/70y:200/340
-            //errorCard.backgroundColor = UIColor.red
-            errorCard.backgroundColor = UIColor(white: 1, alpha: 0) //sets the square background of the view to be white but the alpha is 0 so it is transparent. So the result is just the rounded rect. 
-            errorCard.setString(str: "Where is your speech?")
-            self.view.addSubview(errorCard)
+            
+            // Create the dialog
+            let popup = PopupDialog(title: "OOPS!", message: "This field cannot be empty", image: UIImage(named: "pexels-photo-103290"))
+            popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
+            self.present(popup, animated: true, completion: nil)
+            errorOcc = true
+        } else if copyPaste.text.wordCount() < Match.threshold {
+            let popup = PopupDialog(title: "OOPS!", message: "Text has to be minimum 40 words long", image: UIImage(named: "pexels-photo-103290"))
+            popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
+            self.present(popup, animated: true, completion: nil)
             errorOcc = true
         } else {
             matchVC.fakeInit(document: String(copyPaste.text)) //escape any injection attacks

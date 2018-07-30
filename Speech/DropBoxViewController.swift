@@ -16,8 +16,11 @@
 import UIKit
 import SwiftyDropbox
 import Foundation //only needed for Time API
+import PopupDialog
 
 class DropBoxViewController : UIViewController {
+    
+    
     //MARK: variables
     var audioData: NSMutableData!
     var modelController = ModelController()
@@ -62,6 +65,7 @@ class DropBoxViewController : UIViewController {
     @IBAction func login(_ sender: UIButton) {
         DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self, openURL: {(url: URL) -> Void in UIApplication.shared.openURL(url)})
         hasLogin = true
+        
     }
     
     //MARK: download
@@ -74,20 +78,26 @@ class DropBoxViewController : UIViewController {
             print("1")
         }
         if !hasLogin {
-            errorCardInit(errorParam: "Have you logged in successfully? Try again after logging in.")
+            let popup = PopupDialog(title: "OOPS!", message: "Have you logged in successfully? Try again after logging in.", image: UIImage(named: ",pexels-photo-103290"))
+            popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
+            self.present(popup, animated: true, completion: nil)
             errorOccured = true
             print("2")
             return
         }
         if pathVar.prefix(1) != "/" {
             print(pathVar.prefix(0))
-            errorCardInit(errorParam: "Please preface path with \"/\"")
+            let popup = PopupDialog(title: "OOPS!", message: "Please preface path with \"/\"", image: UIImage(named: ",pexels-photo-103290"))
+            popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
+            self.present(popup, animated: true, completion: nil)
             errorOccured = true
             print("3")
             return
         }
         if pathVar.suffix(4) != ".txt" {
-            errorCardInit(errorParam: "We only accept txt files at the moment.")
+            let popup = PopupDialog(title: "OOPS!", message: "We only accept txt files at the moment.", image: UIImage(named: ",pexels-photo-103290"))
+            popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
+            self.present(popup, animated: true, completion: nil)
             errorOccured = true
             print("4")
             return
@@ -117,8 +127,11 @@ class DropBoxViewController : UIViewController {
                     print ("the error in response is \(error)")
                 }
             } else if let error = error {
+                let popup = PopupDialog(title: "OOPS!", message: "File not found", image: UIImage(named: "pexels-photo-103290"))
+                popup.addButton(CancelButton(title: "OK", height: 50, dismissOnTap: true, action: nil))
+                self.present(popup, animated: true, completion: nil)
                 self.errorOccured = true
-                self.errorCardInit(errorParam: "Invalid Path")
+//                self.errorCardInit(errorParam: "Invalid Path")
                 print ("OVERALL ERROR IS \(error)")
             }
             }
@@ -129,9 +142,9 @@ class DropBoxViewController : UIViewController {
     func errorCardInit(errorParam: String) {
         //self.errorCard = CardView(frame: CGRect(x:65, y:70, width: 270, height: 130)) //x:400/70y:200/340
         //self.errorCard.backgroundColor = UIColor.red
-        self.errorCard.backgroundColor = UIColor(white: 1, alpha: 0)
-        self.errorCard.setString(str: errorParam)
-        self.view.addSubview(self.errorCard)
+//        self.errorCard.backgroundColor = UIColor(white: 1, alpha: 0)
+//        self.errorCard.setString(str: errorParam)
+//        self.view.addSubview(self.errorCard)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
