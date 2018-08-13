@@ -1,0 +1,6 @@
+framework module SocialServiceBrowser {
+  umbrella header "SocialServiceBrowser-umbrella.h"
+
+  export *
+  module * { export * }
+}

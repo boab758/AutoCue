@@ -48,12 +48,14 @@ PODS:
   - nanopb/encode (0.3.8)
   - PopupDialog (0.5.4)
   - Protobuf (3.6.0)
+  - SocialServiceBrowser (0.1.0)
   - SwiftyDropbox (4.6.0):
     - Alamofire (~> 4.5.0)
 
 DEPENDENCIES:
   - googleapis (from `.`)
   - PopupDialog (~> 0.5.4)
+  - SocialServiceBrowser
   - SwiftyDropbox
 
 SPEC REPOS:
@@ -69,6 +71,7 @@ SPEC REPOS:
     - nanopb
     - PopupDialog
     - Protobuf
+    - SocialServiceBrowser
     - SwiftyDropbox
 
 EXTERNAL SOURCES:
@@ -88,8 +91,9 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  SocialServiceBrowser: 29ffb50101dd6a21e3b1490ae596b25fd4a67ef4
   SwiftyDropbox: 8af645e744de6f17b4e9fdeba21365b8dc55a542
 
-PODFILE CHECKSUM: a4e86abf765c8aee3276f0c8df607370d23a01c8
+PODFILE CHECKSUM: ed82aeff258e5e6d54806b2685ddfd3230abc2ff
 
 COCOAPODS: 1.5.3

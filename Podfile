@@ -9,6 +9,7 @@ target 'Speech' do
   pod 'googleapis', :path => '.'
   pod 'SwiftyDropbox'
   pod 'PopupDialog', '~> 0.5.4'
+  pod 'SocialServiceBrowser'
 end
 
 
